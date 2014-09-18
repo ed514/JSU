@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exploratory Data Analysis I:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Exploratory Data Analysis I:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Exploratory Data Analysis I:</h1>
+    <h2>Univariate Visualization</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h1>Overview</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review:
+
+<ul>
+<li>Some More R Code Tips</li>
+<li>Measurement Scales</li>
+</ul></li>
+<li>Creating and Interpreting Univariate Visualizations 
+
+<ul>
+<li>Nominal/Ordinal Scale Data</li>
+<li>Intervallic/Ratio Scale Data</li>
+</ul></li>
+<li>Preview of First Assignment
+
+<ul>
+<li>R Markdown Answer sheet (electronic)</li>
+<li>R Script Answer sheet (electronic)</li>
+</ul></li>
+<li>Next class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Additional Information/Clarification About R</h2>
+
+<ul>
+<li>Anything that appears to the right of the &#39;#&#39; symbol on the same line is ignored
+
+<ul>
+<li>theData &lt;- as.data.frame(read.dta(# &quot;filenameIgnored.dta&quot;))</li>
+<li>theData &lt;- as.data.frame(read.dta(#<br>
+    &quot;filenameNotIgnored.dta&quot;))</li>
+<li>If the &#39;#&#39; symbol is used to split a command across lines, you should also split the command across lines</li>
+</ul></li>
+<li>Everything is interpreted literally
+
+<ul>
+<li><code>library(&quot;ggplot2&quot;) # Correct</code></li>
+<li><code>library(&quot;ggplot&quot;) # Incorrect</code></li>
+<li><code>libary(&quot;ggplot2&quot;) # Incorrect</code></li>
+<li><code>library(&quot;ggplot2) # Incorrect</code></li>
+<li><code>library(Ggplot2&quot;) # Incorrect</code></li>
+</ul></li>
+<li>Type everything exactly as it appears (unless the instructions say otherwise)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Additional Information/Clarification About R</h2>
+
+<ul>
+<li>When copying/pasting the code examples from the slides, be careful not to highlight parts of the box around the code.  If you do you&#39;ll see a line of &#39;-&#39; across the screen and then you&#39;ll get the dreaded &#39;+&#39; cursor in the console window.<br></li>
+<li>R Studio will make working with R 1e9 times easier; if the workstation you&#39;re sitting at does not have R Studio try to install it, or find a computer that does</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Additional Information/Clarification About R</h2>
+
+<ul>
+<li>If you download any of the example files you can use <code>library(&quot;foreign&quot;); yourDataObjectName &lt;- as.data.frame(read.dta(file.choose()))</code> to make a dialog box appear where you can select the file</li>
+<li>If you already have installed a package previously, you only need to use <code>library(&quot;packageName&quot;)</code> to load it; You can try this to see if the package is loaded, and if it isn&#39;t you can use <code>install.packages(&quot;packageName&quot;, dep = TRUE); library(&quot;packageName&quot;)</code> to install and load it</li>
+<li>Read the book.  There is a lot of good information (including step-by-step instructions for downloading and installing R)</li>
+<li>If you need additional practice/getting started with R check out <a href="http://www.datacamp.com">DataCamp</a></li>
+<li>You can use the up arrow on your keyboard to bring the previous command back if you need/want to edit/modify things</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Measurement Scales</h2>
+
+<h3>Nominal Scale Variabels</h3>
+
+<ul>
+<li>Nominal scales are used to measure unordered categories (e.g., categories where each of the groups are defined to be equivalent)</li>
+<li>R even has a special type of data for these types of variables called FACTOR variables</li>
+<li>Let&#39;s create a factor variable to better understand things</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a new vector called make that takes values 1-7
+make &lt;- rep(seq(1, 7, by = 1), 800)
+
+# Create a cloned version of the make vector called make2 and give it labels
+make2 &lt;- factor(make, labels = c(&quot;Toyota&quot;, &quot;Volvo&quot;, &quot;Ford&quot;, &quot;Chevrolet&quot;, #
+                    &quot;BMW&quot;, &quot;Saab&quot;, &quot;Benz&quot;), levels = c(1:7))
+
+# To see the properties we need to try a few things
+table(make); table(make2)
+</code></pre>
+
+<pre><code>## make
+##   1   2   3   4   5   6   7 
+## 800 800 800 800 800 800 800
+</code></pre>
+
+<pre><code>## make2
+##    Toyota     Volvo      Ford Chevrolet       BMW      Saab      Benz 
+##       800       800       800       800       800       800       800
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># So far so good, everything looks the same, but what if we tried to use a
+# math function on the nominal vector?  Any Guesses?
+mean(make2)
+</code></pre>
+
+<pre><code>## Warning: argument is not numeric or logical: returning NA
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r">make2[3] == make2[3]
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">make2[3] != make2[3]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Measurement Scales</h2>
+
+<h3>Ordinal Scale Variables</h3>
+
+<ul>
+<li>Ordinal scales are used to measure categories where the numbers represent an order of magnitude (e.g., lower value numbers are &lt; higher value numbers)</li>
+<li>Like nominal scale variables, R also has a special data type for ordinal scale variables</li>
+<li>We&#39;ll create an example of an ordinal scale variable to better illustrate this</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Define a survey response
+item1 &lt;- rep(seq(1, 5, by = 1), 200)
+
+# Make this an ordinal scaled variable
+item1b &lt;- ordered(item1, levels = c(1:5), #
+          labels = c(&quot;Strongly Disagree&quot;, &quot;Disagree&quot;, #
+                     &quot;Neither Agree nor Disagree&quot;, #
+                     &quot;Agree&quot;, &quot;Strongly Agree&quot;))
+
+# Check arithmetic operations
+item1[2] + item1[3]
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<pre><code class="r">item1b[2] + item1b[3]
+</code></pre>
+
+<pre><code>## Warning: &#39;+&#39; is not meaningful for ordered factors
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Look at tabulations
+table(item1)
+</code></pre>
+
+<pre><code>## item1
+##   1   2   3   4   5 
+## 200 200 200 200 200
+</code></pre>
+
+<pre><code class="r">table(item1b)
+</code></pre>
+
+<pre><code>## item1b
+##          Strongly Disagree                   Disagree 
+##                        200                        200 
+## Neither Agree nor Disagree                      Agree 
+##                        200                        200 
+##             Strongly Agree 
+##                        200
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Test principal feature of oridinal scales (e.g., the values are ordered)
+item1b[2] &gt;= item1b[3]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">item1b[2] == item1b[3]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">item1b[2] != item1b[3]
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">item1b[1] &lt; item1b[2]
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Measurement Scales</h2>
+
+<h3>Intervallic Scale Variables</h3>
+
+<ul>
+<li>Intervallic scales do not include a true zero or do not include zero at all</li>
+<li>We&#39;ll create a variable with these properties</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Set the random number seed so you&#39;ll generate the same random numbers as
+# me
+set.seed(7779311)
+
+# Create a new variable with the same scale as a standard IQ test
+iq &lt;- trunc(rnorm(1000, mean = 100, sd = 15))
+
+# Show first 10 elements of the IQ variable (vector in R speak)
+iq[1:10]
+</code></pre>
+
+<pre><code>##  [1]  95  90 136  74  99  99  86 115  99 107
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Test for Equivalence
+iq[2] != iq[2]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">iq[2] != iq[3]
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r"># Test for order of magnitude
+iq[2] &lt; iq[3]
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">iq[5] &gt;= iq[6]
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Test for arithmetic operations
+iq[2] + iq[3]
+</code></pre>
+
+<pre><code>## [1] 226
+</code></pre>
+
+<pre><code class="r">iq[87] - iq[25]
+</code></pre>
+
+<pre><code>## [1] -7
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Measurement Scales</h2>
+
+<h3>Ratio Scale Variables</h3>
+
+<ul>
+<li>Ratio scales include a true zero and all arithmetic operations can be used with them</li>
+<li>We&#39;ll create a new variable with the number of absensces for a group of students</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a variable/vector with the number of absences over the year for
+# students
+absences &lt;- rpois(500, 4)
+
+# List the first 20 elements of the variable
+absences[1:20]
+</code></pre>
+
+<pre><code>##  [1] 1 4 4 5 3 1 8 1 0 5 9 2 7 6 4 3 2 6 1 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Test whether or not seventh data element is twice as large as first
+absences[7]/2 == absences[1]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r"># Test arithmetic property of zero
+absences[7] + absences[6]
+</code></pre>
+
+<pre><code>## [1] 9
+</code></pre>
+
+<pre><code class="r">absences[7] + absences[5]
+</code></pre>
+
+<pre><code>## [1] 11
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h1>Univariate Data Visualization</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We&#39;ll use the same example data from last week.  Use the code below to load the libraries that you&#39;ll need as well as to get the data loaded</li>
+</ul>
+
+<pre><code class="r"># Need the foriegn package to use sample data and ggplot2 for the graph commands
+library(&quot;foreign&quot;); library(&quot;ggplot2&quot;)
+
+# Download/load the sample data from my server
+myData &lt;- as.data.frame(read.dta( # Don&#39;t put the URL on this line 
+        &quot;http://www.paces-consulting.org/mde/data-wrkshp4-843.dta&quot;))
+
+# If you want to download the file to your computer instead do this:
+download.file(&quot;http://www.paces-consulting.org/mde/data-wrkshp4-843.dta&quot;, #
+              &quot;exampleDataFile.dta&quot;)
+
+# Force a dialog box to popup so you can find the file on the computer
+# myData &lt;- as.data.frame(read.dta(file.choose()))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h1>Recap of Measurement Scales</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Summary of Numeric Properties of Meaasurement Scales</h2>
+
+<ul>
+<li>Nominal scale variables can only be treated as TRUE or FALSE
+
+<ul>
+<li>This means you can compare whether or not one category is the same as another </li>
+<li>For example, Ford != BMW is true but Ford == BMW is false</li>
+</ul></li>
+<li>Ordinal scale variables provide additional mathematical properties beyond the nominal scale
+
+<ul>
+<li>Ordinal scale variables have all of the properties of nominal scale variables </li>
+<li>You can also compare whether one value is less than or greater than another value<br></li>
+</ul></li>
+<li>Nominal and Ordinal scale variables are sometimes grouped together and called &quot;Categorical&quot; variables</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Summary of Numeric Properties of Meaasurement Scales (continued)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Intervallic scale variables give us even a bit more flexibility
+
+<ul>
+<li>In addition to the properties above, we can use basic arithmetic with intervallic scale variables</li>
+<li>Intervallic scales lack a true zero</li>
+<li>So we can compare equality, magnitude, and do basic arithmetic wiht the values</li>
+</ul></li>
+<li>Ratio scale variables are what you would probably think of instinctively because of how we are typically taught
+
+<ul>
+<li>In addition to all of the previous properties, ratio scales support claims about multiplicative rules/difference (e.g., x is twice as much as y) and include a real zero</li>
+</ul></li>
+<li>What does this mean for graphs ?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h1>Creating and Interpreting Univariate Visualizations</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>This week we&#39;ll be using different commands from the ggplot2 package to better illustrate how graphs are constructed, why we use certain types of graphs for specific data types, and how these things come together to guide our interpretation of the data
+
+<ul>
+<li>The commands can get a bit complex, but they force you to think explicitly about what you are constructing, why you are constructing it, and how you want your audience to interpret the results</li>
+</ul></li>
+<li>The first thing to understand is what the <code>ggplot2</code> library does and why it does things that way</li>
+<li>It isn&#39;t liste in the course reading, but be sure to read the R&#39;s Souls&#39; Tip 3.13 on page 102 of the text.<br></li>
+<li>Be sure to ask any questions you have about the first assignment templates ASAP</li>
+<li>Reminder, next week we will not be meeting here as I&#39;ll be out of town.  Any additional reading you may need will be posted to the blackboard site.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h1>Creating and Interpreting Univariate Visualizations</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The Grammar of Graphics</h2>
+
+<ul>
+<li>The <code>ggplot2</code> package is an attempt to directly implement a theory of how graphs should be constructed based on the work of Leland Wilkinson </li>
+<li>In his &quot;grammar&quot; Wilkinson splits graphs into several different layers, but those which you need to understand the most are: data, geometry, scale, aesthetics, and statistics</li>
+<li>Data visualizations, generally, are ways that we summarize statistical results so part of what we need to understand about visualizations are what the statistics behind them tell us</li>
+<li>The &quot;grammar&quot; described above makes it much easier to disect graphics in a systemic way and to understand how these different parts work together</li>
+<li>We won&#39;t recreate all of the graphs from last week, but we will recreate several of them to help you to discuss the meaning of the graphs in class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h1>Graphing Nominal/Ordinal Data</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Store the data for the graphs in an object &amp; identify the x-axis variable
+theGraphData &lt;- ggplot(myData, aes(x = race))
+
+# ggplot() is the function that you will use to define the data you will use
+# and the variable that you would like to create a graph for
+
+# myData is the data object with your data
+
+# aes() is the aesthetics function of ggplot
+
+# x = is the argument to set the x-axis to represent a varible we choose
+
+# dataForYourGraph &lt;- ggplot(yourData, aes(x = variableYouWantToGraph))
+
+# Saving this in an object prevents you from retyping the information over
+# and over again
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Now add some geometry to this and...
+theGraphData + geom_bar()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># And if we want colored bars we can add an aesthetic option to the
+# geometries
+theGraphData + geom_bar(aes(fill = race))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># If you wanted to start faceting the graph you could add information about
+# how the data will be faceted
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(~grade)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># You could specify how you wanted to facets to appear as well
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(~grade, nrow = 3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># We can map the color fill of the bars to a different variable to produce
+# stacked bar graphs as well
+theGraphData + geom_bar(aes(fill = frl)) + facet_wrap(~grade, nrow = 2)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-17.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Interpretting nominal/ordinal scale variable graphs</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In each of these cases, the bars show the number of observations/records (e.g., students) that have a specified value of race
+
+<ul>
+<li>In the first two examples, that is the only variable shown</li>
+<li>In subsequent examples, the same statistical result is shown, but we parse the data based on other features (e.g., grade level, free/reduced price lunch status, etc...)</li>
+</ul></li>
+<li>Find someone next to you to discuss the questions on the next slide with</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Interpretting nominal/ordinal scale variable graphs (discussion questions)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How easy were the stacked bar graphs for you to interpret? 
+
+<ul>
+<li>Next we will compare the last graph you saw with a different graph</li>
+<li>If you have the last graph we did up on your computer, leave it there as a point of reference</li>
+<li>Take a few minutes to talk with the students around you and try to answer the following questions:</li>
+<li>Do the graphs show the same information or different information?</li>
+<li>Which graph is easier to interpret (ignoring size of the graphic at the moment)?  Why?</li>
+<li>If you had to explain what the graph showed to a parent, what would you say?</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Graph for comparison
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(frl ~ grade, nrow = 3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-18.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>Interpretting nominal/ordinal scale variable graphs (continued)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Which graph did you find easier to interpret and why?</li>
+<li>For any type of bar graph, the only interpretable feature is the height (for vertical bars) or width (for horizontal bars) of the bars
+
+<ul>
+<li>Sometimes people will use bar graphs to show scalar (single number) values (e.g., the average of a variable, the median of a variable, etc...)</li>
+<li>In those cases, it is still the height/width of the bar that needs to be interpreted, but the value itself has a different meaning</li>
+</ul></li>
+<li>While bar graphs showing proportions/percentages are used relatively frequently, they require a bit more work than tables of simple counts</li>
+<li>Remember that you want ordinal graphs to also show the ordering of the values (e.g., you wouldn&#39;t graph the MCT2 proficiency levels as proficient, minimal, basic, advanced because it distorts the ordered nature of the data)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h1>Graphing Intervallic/Ratio Data</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Because intervallic and ratio scale variables have distinctly different mathematical properties, we need to visualize them a bit differently</li>
+<li>Since the commands we are using from <code>ggplot2</code> this week are more flexible, we can do a bit more to show some of the things we were discussing last week
+
+<ul>
+<li>For example, we can layer multiple graphs on top of one another to see/show how the parameters change values</li>
+<li>We can layer different types of graphs on top of each other to examine the similarities and differences between the graph types</li>
+</ul></li>
+<li>Unlike graphs for nominal/ordinal scale variables, now we also need to interpret our x-axis based on it&#39;s set of values</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a new object to store your intervallic/ratio scale data for the
+# graphs and identify the x-axis variable
+theGraphData &lt;- ggplot(myData, aes(x = elamoy))
+
+# Now add some geometry to this and...
+baseHistogram &lt;- theGraphData + geom_histogram(binwidth = 10, fill = &quot;White&quot;)
+
+# geom_histogram() is the function use to generate a histogram with our data
+
+# binwidth = specifies how many values each bar should take up
+
+# fill = allows us to control the color of the bars in the histogram
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># You probably are wondering where the graph is...if you want to see it
+# enter
+baseHistogram
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-20.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-37" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Now we&#39;ll add a new layer with half the binwidth
+baseHistogram.2 &lt;- baseHistogram + #
+        geom_histogram(binwidth = 5, fill = &quot;Yellow&quot;, alpha = I(0.75))
+
+# baseHistogram is the first histogram we created
+
+# This time we add a new layer to an existing graph
+
+# We use half the bandwidth as the previous graph and use yellow bars
+
+# alpha = I() is a function to set the level of transparency
+# 0 is completely transparent and 1 is completely opaque
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Again, if you want to see the graph, just enter the name of the object
+baseHistogram.2
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-22.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-39" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Now we&#39;ll add a new layer with half the binwidth
+baseHistogram.3 &lt;- baseHistogram.2 + #
+    geom_histogram(binwidth = 2, fill = &quot;Blue&quot;, alpha = I(0.75))
+
+# Now we just added another layer to the graph that already has two layers
+
+# This time the bars will be blue and only 2 points wide each
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-40" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Again, if you want to see the graph, just enter the name of the object
+baseHistogram.3
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-24.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-41" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Now we&#39;ll add a new layer with half the binwidth
+baseHistogram.4 &lt;- baseHistogram.3 + #
+    geom_histogram(binwidth = 1, fill = &quot;Orange&quot;, alpha = I(0.75))
+
+# And now we added a fourth layer with orange bars that are 1 point wide
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-42" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Here is the combination of all the different histograms from last week
+# layered on top of each other
+baseHistogram.4
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-26.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-43" style="background:;">
+  <hgroup>
+    <h2>Interpretting intervallic/ratio scale variable graphs (pt 1)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In each of the histograms, the height of the bar is still telling you information about the density of observations (e.g., the number of observations that have a specific value for that variable)</li>
+<li>The major difference is that our x-axis now has values on a scale with numeric meaning (e.g., we can interpret the meaning of a score of 130 on a test, whereas a value of 3 for race would not be interpretable without knowing how the data were coded)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-44" style="background:;">
+  <hgroup>
+    <h2>Interpretting intervallic/ratio scale variable graphs (pt 1) - Discussion</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Take a few minutes to talk with a different neighbor about what you notice about the different layers of the graphs:
+
+<ul>
+<li>Which graph provides the best/worst resolution on the data (e.g., which one is the clearest in terms of showing the number of observations taking a particular value)?  Why?</li>
+<li>How does changing the bandwidth distort and/or refine our picture of the data?</li>
+<li>What would you propose as a good rule for choosing the bandwidth to graph the data?</li>
+<li>People often refer to the Gaussian distribution as the &quot;bell curve.&quot;  Do these data fit that shape?  Why/why not?</li>
+</ul></li>
+<li>After we finish this we&#39;ll take a short break (e.g., 5-10 minutes) and then will wrap up the last bit of things</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-45" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create an object to store the data for the graphs and identify the x-axis
+# variable
+theGraphData &lt;- ggplot(myData, aes(x = mtheoy))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-46" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a simple density plot
+theGraphData + geom_density()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-28.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-47" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># What would the density look like with a different kernel density
+# estimator?
+theGraphData + geom_density() + geom_density(kernel = &quot;rectangular&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-29.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-48" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># We can also change the bandwidths of the different kernel density estimators
+theGraphData + geom_density(adjust = .75) + #
+geom_density(kernel = &quot;rectangular&quot;, adjust = .25)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-30.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-49" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># So what do density plots really show us?
+theGraphData + #
+geom_histogram(binwidth = 1, fill = &quot;Black&quot;, aes(y = ..density..)) + #
+geom_density(color = &quot;White&quot;, size = 2) + #
+geom_density(adjust = .5, color = &quot;Yellow&quot;, size = 2)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-31.png" title="plot of chunk unnamed-chunk-31" alt="plot of chunk unnamed-chunk-31" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-50" style="background:;">
+  <hgroup>
+    <h2>Interpretting intervallic/ratio scale variable graphs</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Explain what the density plot does in your own words.</li>
+<li>Is it easier, more difficult, or about the same to interpret histograms or density plots?</li>
+<li>Why would you use a density plot?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-51" style="background:;">
+  <hgroup>
+    <h1>Preview of first assignment</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>One of the first things you should do is download and look over the dataset documentation</li>
+</ul>
+
+<pre><code class="r"># Set the working directory for your computer (it will look different from
+# mine)
+setwd(&quot;/Users/billy/Desktop&quot;)
+
+# Store the link in an object
+url &lt;- &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/task1-documentation.txt&quot;
+
+# Download the dataset documentation
+download.file(url, &quot;task1-documentation.txt&quot;, method = &quot;curl&quot;)
+</code></pre>
+
+<ul>
+<li>If you want to view the file in R use <code>readLines(&quot;task1-documentation.txt&quot;)</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-52" style="background:;">
+  <hgroup>
+    <h1>Preview of first assignment (continued)</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>You can also load your data directly from the same server if you don&#39;t want to download it from BlackBoard</li>
+<li>First - Load the foriegn data library
+
+<ul>
+<li><code>library(&quot;foreign&quot;)</code></li>
+</ul></li>
+<li><p>Next - Use your First and Last name the same way you see JohnDoe below</p>
+
+<ul>
+<li><p><code>yourData &lt;- as.data.frame(read.dta( #</code></p>
+
+<p><code>&quot;http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta&quot;))</code></p></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-53" style="background:;">
+  <hgroup>
+    <h1>Preview of first assignment</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>R Markdown Answer sheet</h2>
+
+<ul>
+<li>This is the file format used to generate the slides for the course</li>
+<li>You can see it does a pretty decent job of keeping the code, graphs, and comments together in a single place</li>
+<li>Everything is set up for you for this first assignment to make it easier for you to work on generating the graphs and writing up your interpretations
+
+<ul>
+<li>Test your code in the console window before entering it into your answer sheet (this way you&#39;ll know that it works)</li>
+<li>Make sure that you load any packages you need to do the work</li>
+<li>Use the slides from this week and last week to give you some idea of how to approach working with the data</li>
+<li>Make sure to look at the codebook document to understand what the data in your file are</li>
+</ul></li>
+<li>If you&#39;ve followed my advice, this assignment should not take you long to complete</li>
+<li>If you&#39;ve not been reviewing things and trying to replicate them on your own, it will be difficult for you</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-54" style="background:;">
+  <hgroup>
+    <h1>Preview of first assignment</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>R Script Answer sheet</h2>
+
+<ul>
+<li>This is nearly identical to the R Markdown document
+
+<ul>
+<li>The biggest difference for you is that you&#39;ll need to enter &quot;#&quot; before each line of your comments/interpretation</li>
+<li>The biggest difference for me is that I won&#39;t be able to look at an HTML formatted document with all of your code, comments, and graphs</li>
+<li>I cannot encourage you enough to do the work in R Studio using the R Markdown document</li>
+<li>The R Markdown answer sheet will provide you with output that you can share with others to show them your ability to do the work and provide step by step instructions for them to replicate it with their own data</li>
+</ul></li>
+<li>Make sure to use a plain text editor when working with this file (e.g., DO NOT USE Word Processing programs)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-55" style="background:;">
+  <hgroup>
+    <h1>Next class</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Reminder (again) : Class will not meet next week, but you will need to turn in the assignment before midnight</li>
+<li>Make sure you are doing the readings
+
+<ul>
+<li>I work under the assumption that you are doing the readings</li>
+<li>That means if I think the book did a good job covering something, I will assume you understand it (because you&#39;ve read it and not asked any questions on the discussion board about it) and that you are perfectly comfortable with the material</li>
+<li>The department is working with the book store to figure out what happened with the book and ordering things</li>
+<li>If you don&#39;t understand the reading(s) and/or are having difficulties working through the examples post a question to the discussion board and ask for help</li>
+</ul></li>
+<li>Unless we&#39;ve made prior arrangements the work is due when it is due.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Review'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Review'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Review'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title=''>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Review'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title=''>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title=''>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Review'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title=''>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title=''>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title=''>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Review'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title=''>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title=''>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Univariate Data Visualization'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Recap of Measurement Scales'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Summary of Numeric Properties of Meaasurement Scales (continued)'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Creating and Interpreting Univariate Visualizations'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Creating and Interpreting Univariate Visualizations'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Graphing Nominal/Ordinal Data'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title=''>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title=''>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title=''>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title=''>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title=''>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Interpretting nominal/ordinal scale variable graphs'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Interpretting nominal/ordinal scale variable graphs (discussion questions)'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title=''>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Interpretting nominal/ordinal scale variable graphs (continued)'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Graphing Intervallic/Ratio Data'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title=''>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title=''>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title=''>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title=''>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title=''>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title=''>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title=''>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title=''>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='Interpretting intervallic/ratio scale variable graphs (pt 1)'>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='Interpretting intervallic/ratio scale variable graphs (pt 1) - Discussion'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title=''>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title=''>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title=''>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title=''>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title=''>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='Interpretting intervallic/ratio scale variable graphs'>
+         50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title='Preview of first assignment'>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title='Preview of first assignment (continued)'>
+         52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title='Preview of first assignment'>
+         53
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=54 title='Preview of first assignment'>
+         54
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=55 title='Next class'>
+         55
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

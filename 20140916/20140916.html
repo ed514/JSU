@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EDA &amp; The Grammar of Graphics:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="EDA &amp; The Grammar of Graphics:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>EDA &amp; The Grammar of Graphics:</h1>
+    <h2>Examples and Additional Resources for Data Visualization</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h1>Overview</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review:
+
+<ul>
+<li>Reminders</li>
+<li>First Course Assignment</li>
+</ul></li>
+<li>More about the Grammar of Graphics 
+
+<ul>
+<li>Outline/Definitions</li>
+<li>Code Examples</li>
+<li>Additional Tools<br></li>
+</ul></li>
+<li>Next class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Reminders</h2>
+
+<ul>
+<li>Make sure you are participating in the discussion boards
+
+<ul>
+<li>Page 7 of the syllabus says: Additionally, you must participate weekly on the course messageboard (e.g., submit at least one question about something from the reading/lecture and submit at least one response to a classmate&#39;s question).  Failure to participate at least 75% of the time will lower your total grade by 10 points (One letter grade).</li>
+<li>Many students are not participating and this is an easy way to avoid a bad grade in the course</li>
+</ul></li>
+<li>Make sure you are doing the readings</li>
+<li>Look through the additional resources that are listed in the slides to get additional help with things</li>
+<li>If you don&#39;t ask questions, I won&#39;t know that you have them and won&#39;t know what needs to be reviewed</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>First Course Assignment</h2>
+
+<ul>
+<li>A fully worked example was posted to the GitHub site last Thursday (11sep2014) </li>
+<li>The R script version was not posted to the GitHub site until Sunday (14sep2014) morning
+
+<ul>
+<li>However, the only difference between the two is formatting all of the content is identical</li>
+</ul></li>
+<li>I provided different levels of complexity in the graphs, different uses of the <code>qplot()</code> and <code>ggplot()</code> functions, and different levels of sophistication regarding the interpretation</li>
+<li>Additionally, I also commented on what I wrote to give everyone a better idea of what it is that I am looking for and how I think about things as I am reading through your work.<br></li>
+<li>This should be a fairly easy assignment if you&#39;ve been able to create the graphs in class and spend time working on things outside of class<br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>First Course Assignment (and some more generalized stuff as well)</h2>
+
+<ul>
+<li>I cannot stress enough that if you are not trying to reproduce the examples on your own throughout the week (e.g., 5-10 minutes per day), it will make your experience in the course miserable</li>
+<li>Yes, R is difficult to learn.  However, the book for the course (which also has a lot of good easy to follow information) is $80 new from Amazon and the software that you are working with is Free.<br>
+
+<ul>
+<li>Most schools/districts don&#39;t have sufficient resources to staff a research team</li>
+<li>If you invest the time into learning this now and getting the fundamentals/basics down we can change how data is used to support students and educators across the state</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>First Course Assignment (and some more generalized stuff as well)</h2>
+
+<ul>
+<li>If you are getting stressed about things while working on them at home, walk away from the computer get your mind right and then come back to the computer
+
+<ul>
+<li>I still get frustrated with things in R at times myself, but I accept that if I perservere I will learn the skill I needed</li>
+<li>Because I try to keep the majority of the code that I write in scripts, that means once I learn it, if I use good enough comments I can recycle my old work</li>
+</ul></li>
+<li>That all said, you need to do whatever you can to continue pushing yourself to spend the time working through the growing/learning pains</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h1>More about the Grammar of Graphics</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Outline/Definitions</h2>
+
+<ul>
+<li>I will be posting readings about the grammar of graphics on the blackboard site that are required. </li>
+<li>It won&#39;t be too long, but it is important to understand if you really want to get more insight from data visualizations</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h1>More about the Grammar of Graphics</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Code Examples</h2>
+
+<ul>
+<li>All of the code examples come from the book <a href="ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis">http://ggplot2.org/book/</a>, which was written by the same guy who wrote the code for <code>ggplot2</code>, Hadley Wickham</li>
+<li>The ggplot2 package in R is his attempt to implement the Grammar of Graphics in the R language</li>
+<li>All of the examples from the book&#39;s website can be found in a separate directory in this repository called ggplot2-Examples
+
+<ul>
+<li>The only alterations made to the source code provided by the author were structural/formatting (e.g., wrapped all of the source code inside of a code chunk in R Markdown) and listing all of the packages required for any/all chapters</li>
+</ul></li>
+<li>If you have any interest in developing graphs, it is in your best interest to view the material</li>
+<li>You will see errors due to updates that have been made to the programs since the book was first published, but more often than not these are minute errors that only affect options and not the core functionality</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>More about the Grammar of Graphics</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Additional Resources</h2>
+
+<ul>
+<li>There is another book that covers data visualization in R more broadly called &quot;R Graphics&quot; by Paul Murrell</li>
+<li>I&#39;ve taken the time to write a function that you can use to download and save all of the example files and store them fairly neatly</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Additional Resources</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Load the function that you&#39;ll need
+source(&quot;https://github.com/ed514/JSU/blob/master/20140916/getRGraphicsExamples.R&quot;)
+
+# If you just want to download the examples so you can look at them in the
+# moment use
+getRGraphicsExamples(out = 0)
+
+# If you want to download/save the files instead use (out = 1) is the
+# argument to save the files
+getRGraphicsExamples(out = 1)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Additional Resources</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># The chapter 9 link was broken, otherwise there are chapters from 1 - 19 To
+# print a chapter&#39;s examples to screen uncomment the line below and
+# substitute the chapter number for the @ symbol.  Also, the name of object
+# that contains the examples is the name you see below.
+RGraphExamples[[&quot;chapter@&quot;]]
+
+# To view a specific example you&#39;ll need to substitute the name of the file
+# where you see nameOfExampleFile.R below
+RGraphExamples[[&quot;chapter@&quot;]][[&quot;nameOfExampleFile.R&quot;]]
+
+# To find out the names of the files for each of the chapters in the book
+# substitute the chapter number for the @ symbol
+names(RGraphExamples[[&quot;chapter@&quot;]])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Additional Resources</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># If you saved the files you can use this to see the file names
+list.files()
+
+# If you want to edit/view the files, it&#39;s best to split them in half 
+firstHalf &lt;- list.files(pattern = &quot;RGraphics-chapter[1-8]{1}.R&quot;, ignore.case = FALSE)
+secondHalf &lt;- list.files(pattern = &quot;RGraphics-chapter[1-8]{2}.R&quot;, ignore.case = FALSE)
+
+# Then you can use the following command to open/edit the files
+file.edit(firstHalf)
+file.edit(secondHalf)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h1>Next class</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The first assignment is due by 11:59 tonight (16sep2014)</li>
+<li>Make sure to spend time working through the examples 
+
+<ul>
+<li>If you spend some time working through the code examples here to learn about the different graph examples, it will mean spending less time next week talking/teaching how to create the graphs and more time talking about how to interpret them</li>
+<li>Interpretation is the key.  Regardless of the data, you should be able to look at a visualization and interpret the meaning of the graph and the data it illustrates</li>
+</ul></li>
+<li>I will try to have grades back to everyone before next week</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Review'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Review'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Review'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='More about the Grammar of Graphics'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='More about the Grammar of Graphics'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='More about the Grammar of Graphics'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Additional Resources'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Additional Resources'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Additional Resources'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Next class'>
+         12
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

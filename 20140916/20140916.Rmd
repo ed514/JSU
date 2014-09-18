@@ -1,0 +1,146 @@
+---
+title       : "EDA & The Grammar of Graphics:"
+subtitle    : "Examples and Additional Resources for Data Visualization"
+author      : "William R. Buchanan, Ph.D." 
+job         : "Strategic Data Fellow at MDE/Adjunct Prof at JSU"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+# Overview 
+* Review:
+    + Reminders
+    + First Course Assignment
+* More about the Grammar of Graphics 
+    + Outline/Definitions
+    + Code Examples
+    + Additional Tools  
+* Next class
+
+---
+
+# Review
+## Reminders
+* Make sure you are participating in the discussion boards
+     + Page 7 of the syllabus says: Additionally, you must participate weekly on the course messageboard (e.g., submit at least one question about something from the reading/lecture and submit at least one response to a classmate's question).  Failure to participate at least 75% of the time will lower your total grade by 10 points (One letter grade).
+     + Many students are not participating and this is an easy way to avoid a bad grade in the course
+* Make sure you are doing the readings
+* Look through the additional resources that are listed in the slides to get additional help with things
+* If you don't ask questions, I won't know that you have them and won't know what needs to be reviewed
+
+---
+
+# Review
+## First Course Assignment
+* A fully worked example was posted to the GitHub site last Thursday (11sep2014) 
+* The R script version was not posted to the GitHub site until Sunday (14sep2014) morning
+     + However, the only difference between the two is formatting all of the content is identical
+* I provided different levels of complexity in the graphs, different uses of the `qplot()` and `ggplot()` functions, and different levels of sophistication regarding the interpretation
+* Additionally, I also commented on what I wrote to give everyone a better idea of what it is that I am looking for and how I think about things as I am reading through your work.  
+* This should be a fairly easy assignment if you've been able to create the graphs in class and spend time working on things outside of class     
+
+---
+
+# Review
+## First Course Assignment (and some more generalized stuff as well)
+* I cannot stress enough that if you are not trying to reproduce the examples on your own throughout the week (e.g., 5-10 minutes per day), it will make your experience in the course miserable
+* Yes, R is difficult to learn.  However, the book for the course (which also has a lot of good easy to follow information) is $80 new from Amazon and the software that you are working with is Free.  
+     + Most schools/districts don't have sufficient resources to staff a research team
+     + If you invest the time into learning this now and getting the fundamentals/basics down we can change how data is used to support students and educators across the state
+     
+
+---
+
+# Review
+## First Course Assignment (and some more generalized stuff as well)     
+* If you are getting stressed about things while working on them at home, walk away from the computer get your mind right and then come back to the computer
+     + I still get frustrated with things in R at times myself, but I accept that if I perservere I will learn the skill I needed
+     + Because I try to keep the majority of the code that I write in scripts, that means once I learn it, if I use good enough comments I can recycle my old work
+* That all said, you need to do whatever you can to continue pushing yourself to spend the time working through the growing/learning pains
+
+---
+
+# More about the Grammar of Graphics
+## Outline/Definitions
+* I will be posting readings about the grammar of graphics on the blackboard site that are required. 
+* It won't be too long, but it is important to understand if you really want to get more insight from data visualizations
+
+---
+
+# More about the Grammar of Graphics
+## Code Examples
+* All of the code examples come from the book [http://ggplot2.org/book/](ggplot2: Elegant Graphics for Data Analysis), which was written by the same guy who wrote the code for `ggplot2`, Hadley Wickham
+* The ggplot2 package in R is his attempt to implement the Grammar of Graphics in the R language
+* All of the examples from the book's website can be found in a separate directory in this repository called ggplot2-Examples
+     + The only alterations made to the source code provided by the author were structural/formatting (e.g., wrapped all of the source code inside of a code chunk in R Markdown) and listing all of the packages required for any/all chapters
+* If you have any interest in developing graphs, it is in your best interest to view the material
+* You will see errors due to updates that have been made to the programs since the book was first published, but more often than not these are minute errors that only affect options and not the core functionality
+
+--- 
+
+
+# More about the Grammar of Graphics
+## Additional Resources
+* There is another book that covers data visualization in R more broadly called "R Graphics" by Paul Murrell
+* I've taken the time to write a function that you can use to download and save all of the example files and store them fairly neatly
+
+---   
+
+## Additional Resources
+```{r, eval = FALSE, echo = TRUE, cache = TRUE, tidy = TRUE}
+# Load the function that you'll need
+source("https://github.com/ed514/JSU/blob/master/20140916/getRGraphicsExamples.R")
+
+# If you just want to download the examples so you can look at them in the moment use
+getRGraphicsExamples(out = 0)
+
+# If you want to download/save the files instead use (out = 1) is the argument to save the files
+getRGraphicsExamples(out = 1)
+```
+
+--- 
+
+## Additional Resources
+```{r, eval = FALSE, echo = TRUE, cache = TRUE, tidy = TRUE}
+# The chapter 9 link was broken, otherwise there are chapters from 1 - 19 To print a 
+# chapter's examples to screen uncomment the line below and substitute the chapter number 
+# for the @ symbol.  Also, the name of object that contains the examples is the name you see below.
+RGraphExamples[["chapter@"]]
+
+# To view a specific example you'll need to substitute the name of the file
+# where you see nameOfExampleFile.R below
+RGraphExamples[["chapter@"]][["nameOfExampleFile.R"]]
+
+# To find out the names of the files for each of the chapters in the book substitute
+# the chapter number for the @ symbol
+names(RGraphExamples[["chapter@"]])
+```
+
+---   
+
+## Additional Resources
+```{r, eval = FALSE, echo = TRUE, cache = TRUE}
+# If you saved the files you can use this to see the file names
+list.files()
+
+# If you want to edit/view the files, it's best to split them in half 
+firstHalf <- list.files(pattern = "RGraphics-chapter[1-8]{1}.R", ignore.case = FALSE)
+secondHalf <- list.files(pattern = "RGraphics-chapter[1-8]{2}.R", ignore.case = FALSE)
+
+# Then you can use the following command to open/edit the files
+file.edit(firstHalf)
+file.edit(secondHalf)
+```
+
+---
+
+# Next class
+* The first assignment is due by 11:59 tonight (16sep2014)
+* Make sure to spend time working through the examples 
+     + If you spend some time working through the code examples here to learn about the different graph examples, it will mean spending less time next week talking/teaching how to create the graphs and more time talking about how to interpret them
+     + Interpretation is the key.  Regardless of the data, you should be able to look at a visualization and interpret the meaning of the graph and the data it illustrates
+* I will try to have grades back to everyone before next week
