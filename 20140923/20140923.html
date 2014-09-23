@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exploratory Data Analysis II:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Exploratory Data Analysis II:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Exploratory Data Analysis II:</h1>
+    <h2>Graphing in Two Dimensions</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h1>Overview</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review:
+
+<ul>
+<li>General reminders</li>
+<li>First Assignment</li>
+</ul></li>
+<li>Bivariate Data Visualization 
+
+<ul>
+<li>Continuous v Continuous variables</li>
+<li>Continuous v Categorical variables</li>
+</ul></li>
+<li>Additional tips</li>
+<li>Next class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>General reminders</h2>
+
+<ul>
+<li>Several students lost points on the assignment for not following directions in the syllabus; if you haven&#39;t read through the syllabus you should</li>
+<li>Before submitting any code for your assignment you should be checking to make sure that it does what you intend it to do 
+
+<ul>
+<li>I usually will test the code by running it in the console first and then will add it to my script only after checking it</li>
+<li>If you&#39;re copying and pasting from the console remember to remove the <code>&gt;</code> and <code>+</code> prompts from what you copy and paste</li>
+<li>If what you&#39;re copying is text or a note make sure to include the <code>#</code> symbol before that text</li>
+</ul></li>
+<li>Start new threads on the discussion boards for each unique topic; this makes it easier for everyone to find help</li>
+<li>Although I do not grade grammar or spelling, this is a graduate level course and I expect there to be at least minimal effort on your part to use correct capitalization, complete sentences, etc...</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <p>Load the example data set that will be used tonight</p>
+
+<pre><code class="r"># Load the packages needed for the graphs and to read the data
+library(&quot;foreign&quot;); library(&quot;ggplot2&quot;); 
+
+# Read the example data set from my server
+johnDoe &lt;- as.data.frame(read.dta( # Don&#39;t put the URL on this line 
+        &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta&quot;))
+</code></pre>
+
+<ul>
+<li>Looking only at the bars in the next graphs, what differences did you see?</li>
+<li>Looking at the code, what variable is being graphed in the two examples?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Compare this and the next graph
+qplot(race, data = johnDoe)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">qplot(race, data = johnDoe, geom = &quot;histogram&quot;, na.rm = TRUE, binwidth = 10, 
+    ylab = &quot;# of Students per Score&quot;, main = &quot;Middle of Year ELA : \nBinwidth set to 10&quot;, 
+    xlab = &quot;Middle of Year \nEnglish/Language Arts Scores&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>Keeping in mind that the data for the interpretations below were different what differences do you see in the quality of the interpretations?:
+
+<ul>
+<li>&quot;Asians had the lowest scores while African Americans had the higest scores. &quot;</li>
+<li>&quot;After reviewing the data on the graph it looks as if a majority of the students are black and white. The largest group is black followed by white then there is only a few hispanic.&quot;</li>
+<li>&quot;According to the nominal scale, there are more African American students than any other race in the school.&quot;</li>
+<li>&quot;District has more African-American students than White students and less than or close to 1000 Hispanic or Latino students.&quot;</li>
+<li>&quot;over 200000 scored 0-10&quot;</li>
+</ul></li>
+<li>Which of these do you feel did the best job?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Look at this graph and compare the interpretations on the next slide
+qplot(female, data = johnDoe)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>Which interpretation do you think deserves a better score?  Why?
+
+<ul>
+<li>Males have a higer count than females. </li>
+<li>After reviewing the graph the ratio of male to female is close.  But the male population out weighs the female by a few thousand.</li>
+<li>Based on the graph there are approximately 24,000 male students vs. around 22,000 female students.  The ratio of male to female is pretty evenly distributed with males having a slightly larger number.  As the population is pretty close to 50/50 male to female these results were expected.</li>
+</ul></li>
+<li>Which interpretation is closest to how you interpreted your graphs?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h1>Review</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>First Course Assignment (and some more generalized stuff as well)</h2>
+
+<ul>
+<li>I can bring everyone to the water, but I cannot make anyone drink it</li>
+<li>It is your responsibility as students to ask answerable questions when you do not understand the material</li>
+<li>It is my responsibility to help you find the answers and/or work through the answer when the question is answerable</li>
+<li>If my response to your questions on the discussion board is to review the post that I put up about how to ask questions that can be answered, you should review it and try to frame your question that way </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># This shows you the labels for the variables in the dataset
+attr(johnDoe, &quot;var.labels&quot;)
+</code></pre>
+
+<pre><code>##  [1] &quot;District ID #&quot;                                     
+##  [2] &quot;Non-Unique School ID #&quot;                            
+##  [3] &quot;Unique School ID #&quot;                                
+##  [4] &quot;MSIS Student ID #&quot;                                 
+##  [5] &quot;Student&#39;s Ethnoracial Identity&quot;                    
+##  [6] &quot;Student&#39;s Biological Sex&quot;                          
+##  [7] &quot;Severe Cognitive Disability Indicator&quot;             
+##  [8] &quot;Student Served by Special Education Indicator&quot;     
+##  [9] &quot;English Language Learner Indicator&quot;                
+## [10] &quot;Limited English Proficiency Indicator&quot;             
+## [11] &quot;Migrant Family Indicator&quot;                          
+## [12] &quot;Economically Disadvantaged Indicator&quot;              
+## [13] &quot;Current Grade Level of the Student&quot;                
+## [14] &quot;Current Reading/Language Arts Scaled Score&quot;        
+## [15] &quot;Prior Reading/Language Arts Scaled Score&quot;          
+## [16] &quot;Current Mathematics Scaled Score&quot;                  
+## [17] &quot;Prior Mathematics Scaled Score&quot;                    
+## [18] &quot;Current Reading/Language Arts Proficiency Level&quot;   
+## [19] &quot;Prior Reading/Language Arts Proficiency Level&quot;     
+## [20] &quot;Current Mathematics Proficiency Level&quot;             
+## [21] &quot;Prior Mathematics Proficiency Level&quot;               
+## [22] &quot;Participated in Reading/Language Arts Intervention&quot;
+## [23] &quot;Participated in Mathematics Intervention&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h1>Bivariate Data Visualization</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Continuous v Continuous variables</h2>
+
+<ul>
+<li>We&#39;ve looked at some examples showing the distribution of a single variable so far and even done a bit to show multiple variables simultaneously, but we haven&#39;t looked at how multiple continuous variables can be graphed simultaneously</li>
+<li>To do this we need to look at scatterplots</li>
+<li>Scatterplots are no different from when you were in school and learned about x,y coordinate pairs, we just have more information to display</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># A first example of a scatterplot
+qplot(pgrrlascore, cgrrlascore, data = johnDoe)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>What do you notice about the shape?</li>
+<li>Is it easy to see all of the points?</li>
+<li>What would you say about the relationship between the two variables</li>
+<li>How can we improve on this graph?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Add a label to the x-axis for the variable you graph on the x-axis
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = attributes(johnDoe)$var.labels[[15]])
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Add labels to both axes for your graph 
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = attributes(johnDoe)$var.labels[[15]], #
+      ylab = attributes(johnDoe)$var.labels[[14]])
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>Yes, the <code>attributes(johnDoe)$var.labels[[#]]</code> thing can be confusing</li>
+<li>If you use the <code>names(johnDoe)</code> function you can find the number that corresponds to your variable</li>
+<li>Even easier, however, is if you copy and paste the variable labels from the code book on the blackboard site for the dataset</li>
+<li>You could also look at the codebook and create your own labels</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Add labels to both axes for your graph 
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Since there are a lot of points, we could make them semi-transparent 
+# to view them a bit more easily
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, #
+      alpha = I(0.15))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># And if we want to highlight the trend in the data, we can add a line of best fit
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, alpha = I(0.15)) + #
+      geom_smooth(size = 2, method = &quot;lm&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Or we could add a line that can bend and curve to fit the data a bit more
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, alpha = I(0.15)) + #
+      geom_smooth(size = 2)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Or we could add both types of lines
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, alpha = I(0.15)) + #
+      geom_smooth(size = 2) + geom_smooth(size = 2, method = &quot;lm&quot;, color = &quot;Red&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># If this is our final graph, then we probably want to give it a title as well
+qplot(pgrrlascore, cgrrlascore, data = johnDoe, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, #
+      main = &quot;Relationship between RLA Scores across two years&quot;, alpha = I(0.15)) + #
+      geom_smooth(size = 2) + geom_smooth(size = 2, method = &quot;lm&quot;, color = &quot;Red&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h1>Bivariate Data Visualization</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Continuous v Categorical variables</h2>
+
+<ul>
+<li>Not all of our data are continuous, and sometimes we can to make broader comparisons</li>
+<li>Boxplots are extremely well suited to providing a ton of information in a way that is fairly easy to interpret</li>
+<li>More importantly is that they can help us to make comparisons about the distributions of data between the groups without really understanding the mechanics of the plot itself</li>
+<li>As an example, go <a href="https://wbuchanan.shinyapps.io/EquipercentileLinking/">here</a></li>
+<li>Then click on the percentiles and/or total points tabs and voila...Boxplots</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a boxplot to look for outliers across districts
+ggplot(johnDoe, aes(x = factor(distid), y = cgrmthscore)) + geom_boxplot()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Same thing but this time looking at grade-levels within districts
+ggplot(johnDoe, aes(x = factor(grade), y = pgrmthscore)) + #
+     geom_boxplot(aes(fill = factor(grade))) + facet_wrap(~distid)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># What if we want more detail about the distributions in each of the categories?
+ggplot(johnDoe, aes(x = cgrmthlev, y = pgrmthscore)) + #
+     geom_jitter(alpha = I(.1)) + geom_boxplot(aes(fill = cgrmthlev)) + #
+     facet_wrap(~grade)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-17.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># It works for simpler examples as well
+ggplot(johnDoe, aes(x = factor(grade), y = pgrmthscore)) + #
+     geom_jitter(alpha = I(.1)) + geom_boxplot(aes(fill = factor(grade))) 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-18.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h1>Additional tips</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Something important to remember about Boxplots is that you generally want to use a categorical variable on the x-axis</li>
+<li>You can use <code>class(dataObject$variableName)</code> to determine whether or not the variable you are interested in using on the x-axis is a factor variable
+
+<ul>
+<li>If it is not a factor variable you just need to &quot;wrap&quot; the variable name in the <code>factor()</code> function like the example above with grade level on the x-axis</li>
+<li>If it is a factor variable, you don&#39;t need to do anything else</li>
+</ul></li>
+<li>If you don&#39;t pay attention to this slide, you will almost definitely have difficulties with the next assignment</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h1>Additional tips</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Since some of these examples can take a while to run, you can get a sample from your data object and use that to test your code</li>
+<li>This will help things run faster while you&#39;re trying to create and learn how to create the graphs</li>
+<li>Once you&#39;ve got your code squared away for your graph, then use it on the regualr data object</li>
+<li>The next few slides show an example</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Get a sample of 500 students from the data object
+sampleData &lt;- johnDoe[sample(nrow(johnDoe), 500), ]
+
+# Look at a sumamry of the data just to confirm it&#39;s only 500 students
+summary(sampleData[, 5])
+</code></pre>
+
+<pre><code>##                               Asian           Black or African American 
+##                                   0                                 257 
+##                  Hispanic or Latino                   Two or More Races 
+##                                   6                                   0 
+##   American Indian or Alaskan Native Native Hawaiian or Pacific Islander 
+##                                   0                                   0 
+##                               White 
+##                                 237
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Recreate the last boxplot
+ggplot(sampleData, aes(x = cgrmthlev, y = pgrmthscore)) + #
+     geom_jitter(alpha = I(.1)) + geom_boxplot(aes(fill = cgrmthlev)) + #
+     facet_wrap(~grade)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-20.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># If this is our final graph, then we probably want to give it a title as well
+qplot(pgrrlascore, cgrrlascore, data = sampleData, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, alpha = I(0.5), #
+      main = &quot;Relationship between RLA Scores across two years&quot;) + #
+      geom_smooth(size = 2) + geom_smooth(size = 2, method = &quot;lm&quot;, color = &quot;Red&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-21.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h1>Next class</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The next assignment isn&#39;t due until the 7th of October</li>
+<li>We&#39;ll use the same data that you already have for that assignment
+
+<ul>
+<li>This means you have two full weeks to do things with data that you&#39;ve already become familiar with</li>
+<li>Make sure to ask questions on the discussion board; no questions = everyone understands things perfectly = I don&#39;t set aside time to review things you have questions about</li>
+</ul></li>
+<li>The assignment is in the same format, but there are fewer hints to set things up at the beginning (hint: you can copy and paste the code you used to load your data previously to do it again)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title=''>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title=''>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title=''>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Review'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title=''>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Bivariate Data Visualization'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title=''>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title=''>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title=''>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title=''>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title=''>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title=''>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title=''>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title=''>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title=''>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title=''>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title=''>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Bivariate Data Visualization'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title=''>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title=''>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title=''>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title=''>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Additional tips'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Additional tips'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title=''>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title=''>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title=''>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Next class'>
+         33
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
