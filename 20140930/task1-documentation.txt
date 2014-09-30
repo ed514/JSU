@@ -1,0 +1,394 @@
+-------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/billy/Desktop/Dropbox/JSU/Fall2014/task1/task1-documentation.txt
+  log type:  text
+ opened on:   9 Sep 2014, 13:43:16
+
+. desc
+
+Contains data from JohnDoe-task1.dta
+  obs:        53,630                          
+ vars:            23                          9 Sep 2014 13:40
+ size:     9,438,880                          
+-------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+-------------------------------------------------------------------------------------------------------------------
+distid          str4    %9s                   District ID #
+sch             str3    %9s                   Non-Unique School ID #
+schid           str8    %9s                   Unique School ID #
+msis            str9    %9s                   MSIS Student ID #
+race            double  %35.0g     race       Student's Ethnoracial Identity
+female          double  %10.0g     female     Student's Biological Sex
+scd             double  %39.0g     scd        Severe Cognitive Disability Indicator
+sped            double  %25.0g     sped       Student Served by Special Education Indicator
+ell             double  %24.0g     ell        English Language Learner Indicator
+lep             double  %27.0g     lep        Limited English Proficiency Indicator
+migr            double  %11.0g     migr       Migrant Family Indicator
+ed              double  %30.0g     ed         Economically Disadvantaged Indicator
+grade           double  %10.0g                Current Grade Level of the Student
+cgrrlascore     double  %10.0g                Current Reading/Language Arts Scaled Score
+pgrrlascore     double  %10.0g                Prior Reading/Language Arts Scaled Score
+cgrmthscore     double  %10.0g                Current Mathematics Scaled Score
+pgrmthscore     double  %10.0g                Prior Mathematics Scaled Score
+cgrrlalev       double  %10.0g     levels     Current Reading/Language Arts Proficiency Level
+pgrrlalev       double  %10.0g     levels     Prior Reading/Language Arts Proficiency Level
+cgrmthlev       double  %10.0g     levels     Current Mathematics Proficiency Level
+pgrmthlev       double  %10.0g     levels     Prior Mathematics Proficiency Level
+rlaprogram      double  %39.0g     rlaprog    Participated in Reading/Language Arts Intervention
+mthprogram      double  %40.0g     mthprog    Participated in Mathematics Intervention
+-------------------------------------------------------------------------------------------------------------------
+Sorted by:  
+
+. codebook
+
+-------------------------------------------------------------------------------------------------------------------
+distid                                                                                                District ID #
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  string (str4)
+
+         unique values:  25                       missing "":  0/53630
+
+              examples:  "0006"
+                         "0013"
+                         "0018"
+                         "0021"
+
+-------------------------------------------------------------------------------------------------------------------
+sch                                                                                          Non-Unique School ID #
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  string (str3)
+
+         unique values:  22                       missing "":  0/53630
+
+              examples:  "002"
+                         "004"
+                         "006"
+                         "009"
+
+-------------------------------------------------------------------------------------------------------------------
+schid                                                                                            Unique School ID #
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  string (str8)
+
+         unique values:  182                      missing "":  0/53630
+
+              examples:  "0006-012"
+                         "0013-004"
+                         "0018-006"
+                         "0021-012"
+
+-------------------------------------------------------------------------------------------------------------------
+msis                                                                                              MSIS Student ID #
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  string (str9)
+
+         unique values:  53627                    missing "":  0/53630
+
+              examples:  "199552013"
+                         "397400390"
+                         "600016531"
+                         "799661306"
+
+-------------------------------------------------------------------------------------------------------------------
+race                                                                                 Student's Ethnoracial Identity
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  race
+
+                 range:  [1,7]                        units:  1
+         unique values:  4                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                             5         1  Asian
+                         27413         2  Black or African American
+                           380         3  Hispanic or Latino
+                         25832         7  White
+
+-------------------------------------------------------------------------------------------------------------------
+female                                                                                     Student's Biological Sex
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  female
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         27351         0  Male
+                         26279         1  Female
+
+-------------------------------------------------------------------------------------------------------------------
+scd                                                                           Severe Cognitive Disability Indicator
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  scd
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         52557         0  Non-Severe Cognitive Disability
+                                          Student
+                          1073         1  Student w/Severe Cognitive
+                                          Disability
+
+-------------------------------------------------------------------------------------------------------------------
+sped                                                                  Student Served by Special Education Indicator
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  sped
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         47194         0  Students w/o Disabilities
+                          6436         1  Students w/Disabilities
+
+-------------------------------------------------------------------------------------------------------------------
+ell                                                                              English Language Learner Indicator
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  ell
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         52557         0  Native English Speaker
+                          1073         1  English Language Learner
+
+-------------------------------------------------------------------------------------------------------------------
+lep                                                                           Limited English Proficiency Indicator
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  lep
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         52557         0  Native English Speaker
+                          1073         1  Limited English Proficiency
+
+-------------------------------------------------------------------------------------------------------------------
+migr                                                                                       Migrant Family Indicator
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  migr
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         53093         0  Non-Migrant
+                           537         1  Migrant
+
+-------------------------------------------------------------------------------------------------------------------
+ed                                                                             Economically Disadvantaged Indicator
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  ed
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         18770         0  Not Economically Disadvantaged
+                         34860         1  Economically Disadvantaged
+
+-------------------------------------------------------------------------------------------------------------------
+grade                                                                            Current Grade Level of the Student
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [3,8]                        units:  1
+         unique values:  6                        missing .:  0/53630
+
+            tabulation:  Freq.  Value
+                           309  3
+                         10481  4
+                          8274  5
+                          6844  6
+                          5494  7
+                         22228  8
+
+-------------------------------------------------------------------------------------------------------------------
+cgrrlascore                                                              Current Reading/Language Arts Scaled Score
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [122.39087,215.00581]        units:  1.000e-10
+         unique values:  53630                    missing .:  0/53630
+
+                  mean:   165.567
+              std. dev:   10.9494
+
+           percentiles:        10%       25%       50%       75%       90%
+                           151.689   158.265   165.573    172.82   179.461
+
+-------------------------------------------------------------------------------------------------------------------
+pgrrlascore                                                                Prior Reading/Language Arts Scaled Score
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [100,204]                    units:  1
+         unique values:  98                       missing .:  0/53630
+
+                  mean:   151.295
+              std. dev:   12.0745
+
+           percentiles:        10%       25%       50%       75%       90%
+                               136       143       151       159       167
+
+-------------------------------------------------------------------------------------------------------------------
+cgrmthscore                                                                        Current Mathematics Scaled Score
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [119.72809,214.13619]        units:  1.000e-09
+         unique values:  53630                    missing .:  0/53630
+
+                  mean:   165.069
+              std. dev:   9.65366
+
+           percentiles:        10%       25%       50%       75%       90%
+                           153.881   158.814   164.386   170.666    177.71
+
+-------------------------------------------------------------------------------------------------------------------
+pgrmthscore                                                                          Prior Mathematics Scaled Score
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [106,206]                    units:  1
+         unique values:  97                       missing .:  0/53630
+
+                  mean:   153.526
+              std. dev:   11.9507
+
+           percentiles:        10%       25%       50%       75%       90%
+                               138       146       154       162       169
+
+-------------------------------------------------------------------------------------------------------------------
+cgrrlalev                                                           Current Reading/Language Arts Proficiency Level
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  levels
+
+                 range:  [1,4]                        units:  1
+         unique values:  4                        missing .:  3665/53630
+
+            tabulation:  Freq.   Numeric  Label
+                           315         1  Minimal
+                          3034         2  Basic
+                         20770         3  Proficient
+                         25846         4  Advanced
+                          3665         .  
+
+-------------------------------------------------------------------------------------------------------------------
+pgrrlalev                                                             Prior Reading/Language Arts Proficiency Level
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  levels
+
+                 range:  [1,4]                        units:  1
+         unique values:  4                        missing .:  57/53630
+
+            tabulation:  Freq.   Numeric  Label
+                          6775         1  Minimal
+                         17265         2  Basic
+                         22517         3  Proficient
+                          7016         4  Advanced
+                            57         .  
+
+-------------------------------------------------------------------------------------------------------------------
+cgrmthlev                                                                     Current Mathematics Proficiency Level
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  levels
+
+                 range:  [1,4]                        units:  1
+         unique values:  4                        missing .:  4533/53630
+
+            tabulation:  Freq.   Numeric  Label
+                           401         1  Minimal
+                          1487         2  Basic
+                         21406         3  Proficient
+                         25803         4  Advanced
+                          4533         .  
+
+-------------------------------------------------------------------------------------------------------------------
+pgrmthlev                                                                       Prior Mathematics Proficiency Level
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  levels
+
+                 range:  [1,4]                        units:  1
+         unique values:  4                        missing .:  150/53630
+
+            tabulation:  Freq.   Numeric  Label
+                          8101         1  Minimal
+                         11629         2  Basic
+                         23330         3  Proficient
+                         10420         4  Advanced
+                           150         .  
+
+-------------------------------------------------------------------------------------------------------------------
+rlaprogram                                                       Participated in Reading/Language Arts Intervention
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  rlaprog
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         30389         0  Did not participate in RLA
+                                          Intervention
+                         23241         1  Participated in RLA Intervention
+
+-------------------------------------------------------------------------------------------------------------------
+mthprogram                                                                 Participated in Mathematics Intervention
+-------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+                 label:  mthprog
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/53630
+
+            tabulation:  Freq.   Numeric  Label
+                         34443         0  Did not participate in Math
+                                          Intervention
+                         19187         1  Participated in Math
+                                          Intervention
+
+. log c _all
+      name:  <unnamed>
+       log:  /Users/billy/Desktop/Dropbox/JSU/Fall2014/task1/task1-documentation.txt
+  log type:  text
+ closed on:   9 Sep 2014, 13:43:19
+-------------------------------------------------------------------------------------------------------------------
