@@ -1,0 +1,556 @@
+---
+title       : "Review:"
+subtitle    : "R Basics and Interpreting Graphs"
+author      : "William R. Buchanan, Ph.D." 
+job         : "Strategic Data Fellow at MDE/Adjunct Prof at JSU"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+
+---
+`r opts_chunk$set(message = FALSE)`
+
+```{r, eval = TRUE, echo = FALSE}
+setwd("~/Desktop/Dropbox/JSU/Fall2014/20140930/")
+```
+
+<style>
+strong {
+  font-size: 16pt;
+  font-weight: bold;
+}
+</style>
+<style>
+em {
+  fonnt-size: 16pt;
+  font-style: italic
+}
+</style>
+
+
+## Overview 
+* Review:
+    + Syllabus
+* R Basics 
+    + What is R and why are we using it?
+    + Getting R and RStudio
+    + Installing and loading packages
+    + What are objects and functions?
+    + Downloading Data 
+    + Loading Data into R
+    + Finding the names of variables in your data
+    + Finding information about the variables in your data
+* (continued on next slide)
+
+---   
+
+## Overview (continued)
+* Creating & Interpreting Graphs
+* Additional Resources
+* Next class
+
+---
+
+## Syllabus
+
+On p. 6 of the syllabus, you should have read :
+
+__Everyone must submit at least one (1) question per week on the Blackboard Message Boards upcoming material by Friday at 11:59 pm before class (e.g., 1st questions will be due by 11:59pm 29AUG2014); I will use your questions when preparing slides, activities, and the talks for the next class.__
+
+_If you're concerned about your grade, you need to make sure that you are participating._
+
+Go to [Blackboard Student Help](https://help.blackboard.com/en-us/Learn/9.1_SP_14/Student/050_Course_Content/010_Course_Content_Areas) for general help about the Blackboard platform...OR...when you go to the [JSU Blackboard Homepage](http://www.jsums.edu/ait/blackboard/index.htm), you view the Student Orientation, Videos & Tutorials, or the FAQ page (the FAQ is not the home page) to get support specific to the way JSU has set up Blackboard.
+
+---   
+
+## Additional Info
+* I encourage everyone to share code because there are often several different ways to come up with the same end result.
+* However, it is probably a good idea to make sure you check the code that has been shared with you to make sure that it does what you want.
+     + Several people ended up losing a significant number of points because they did not check to see if the code that was shared with them was the correct code to get the result they needed.
+     + Had several students not had exactly the same issues with the exact same code it would not have been apparent.
+* That said, check the code that people give you.  Run it and make sure it does what it should and be careful about how you copy and paste the code into your answer document.   
+
+
+
+---   
+
+
+
+## What is R and why are we using it?
+Here is a very brief description of R.
+
+* __R__ is a free software environment for statistical computing and graphics.  It is what's known as open-source, which means that unlike commercial software companies that protectively hide away the code on which their software is based, the people who developed __R__ allow everyone to access their code._1_
+
+And some of the reasons why I chose to use it for the course.
+
+* The main advantages of using __R__ are there it is free, and it is a versatile and dynamic environment.  Its open source format and the ability of statisticians to contribute packages to the CRAN mean that there are many things that you can do that cannot be done in commercially available packages.  In addition, it is a rapidly expanding tool and can respond quickly to new developments in data analysis.  These advantages make __R__ an extremely powerful tool._2_ 
+
+---   
+
+## What is R and why are we using it? (continued)
+* There is a critical capacity gap in schools and districts across the state to support classroom educators and educational leaders analyze data to make informed decisions about policy and practice.
+* Resources are scarce in schools and districts, so it was worth it to me to force myself to learn enough of the R language to teach the course if it meant increasing access to data analysis and visualization capabilities for others around the state.
+* Currently, R-Programmers are the highest paid programmers in the computer industry, so it is also about providing you with an increasingly valuable and marketable skill set that you could use to advance your careers.
+
+---
+
+## Getting R and RStudio
+* Go to the R homepage [http://cran.r-project.org](http://cran.r-project.org).
+     + If your computer runs on Windows, click on the link [Download R for Windows](http://cran.r-project.org/bin/windows/).
+     + If your computer runs on Mac OSX, click on the link [Download R for (Mac) OS X](http://cran.r-project.org/bin/macosx/).
+     + I'm assuming everyone is using Windows, but it should be easy enough to click through things and figure it out if you're using OSX or Linux.
+* Next, Click on the link [install R for the first time](http://cran.r-project.org/bin/windows/base/).
+* Last, Click on the link [Download R 3.1.1 for Windows](http://cran.r-project.org/bin/windows/base/R-3.1.1-win.exe).
+* If you're asked whether or not you want to "Save" or "Run" the file, it's easiest to Click on "Run"; Run will start installing R AFTER it finished downloading; Save will just save the installation program on your computer and __WILL NOT INSTALL THE PROGRAM UNTIL YOU RUN IT.__    
+
+---   
+
+## Getting R and RStudio
+* When the installation program begins running, you can click "OK" or "Next" for all of the choices unless you wanted to customize the download.  
+* The only thing you should probably modify is to uncheck the box next to "32-bit Files" on the "Select Components" screen.
+* Once R has __COMPLETELY FINISHED__ the installation process, then you can install RStudio if you'd like.
+* To install RStudio, first go to the [RStudio Home Page](http://www.rstudio.com/) and click on the box [Download RStudio](http://www.rstudio.com/products/RStudio/).
+* Next click on the [Desktop](http://www.rstudio.com/products/RStudio/#Desk) link to move to the part of the page where you will see a link called [Download RStudio Desktop](http://www.rstudio.com/products/rstudio/download/).
+* Assuming you're using Windows, you'll then want to select the link called [RStudio 0.98.1062 - Windows XP/Vista/7/8](http://download1.rstudio.org/RStudio-0.98.1062.exe).
+* You should then be able to follow the same instructions from above to work through installing RStudio.
+
+---   
+
+## Getting R and RStudio
+
+* The course text has instructions for downloading/installing R on pages 65-66.
+* I also posted a PDF under "Contents" called "Installing R and R Studio" on Blackboard; this example includes screen shots, to give you some idea of how things should/might look on the website, provides more details about how things get installed, and also includes information about installing packages in R.
+* If the computer in the lab does not have RStudio it does not matter.  RStudio is just an interface for R (think of it like a new paint job on a car; still the same beat up car, but now it has shiny new paint).
+
+
+---   
+
+## Installing and loading packages
+If you know the package that you want to install then the simplest way is to execute this command:
+`install.packages("package.name")` in which 'package.name' is replaced by the name of the package that you'd like installed...Once a package is installed you need to reference it for __R__ to know that you're using it.  _You need to install the package only once but you need to reference it each time you start a new session of R._  To reference a package, we simply execut this general command: `library("package.name")` in which 'package.name' is replaced by the name of the package that you'd like to use._3_
+
+Another example can be found in the slides from the first week:
+```{r, eval = FALSE, echo = TRUE}
+# If you did not install this package use this code to install it
+install.packages("ggplot2", dep = TRUE)
+
+# Then you can load the graph package
+library("ggplot2")
+```
+
+---   
+
+## Installing and loading packages
+* Althought we've not used it thus far, it would probably be a good idea to 
+install the package named `devtools`.
+* The first time you try to install a package it will ask you to select a mirror; a mirror is just a copy of the code on a specific server;  I tend to favor the mirrors located in WA since they are generally kept up to date and are pretty much always available.
+
+```{r, eval = FALSE, echo = TRUE}
+# Install the devtools package from CRAN
+install.packages("devtools", dep = TRUE)
+
+# With devtools you can install packages directly from github like this
+devtools::install_github("rstudio/ggvis")
+
+# You'll need this installed if you want to use anything cutting edge or
+# to install any of the packages used to create interactive graphics.
+```
+
+---
+
+## Installing and loading packages
+Because I generate the data files for the course in [Stata](http://www.stata.com), the __FIRST__ thing you should always do when starting R is use `library("foreign")` to load the foreign data package in R.  __This is the only way you will be able to work with the data files I create.__ _If you try to open one of these files in a text editor or word processor it will look like a garbled mess._  __TO OPEN THE .dta FILES YOU NEED TO USE R; TO LOAD .dta FILES INTO R YOU NEED TO LOAD THE FOREIGN PACKAGE.__  
+
+```{r, eval = FALSE, echo = TRUE, tidy = TRUE}
+# Load the foreign data package
+library("foreign")
+
+# If you wanted to see what data files this package can read enter
+?foreign
+
+# There are other packages available to read in other types of data files, but 
+# the foreign package will get the job done for this course and is commonly used 
+# in the R community.
+```
+
+---   
+
+## What are objects and functions?
+* This is a very simplified definition, but you can thing of objects and functions like:
+     + Objects store things (e.g., data, results, graphs, etc...).
+     + Functions do things to objects (e.g., add a layer to a graph object, create a graph, etc...).
+* When you create something like `graphData <- ggplot(myData, aes(x = pgrmthscore, y = cgrmthscore))` you're telling the __function__ `ggplot` that you want to map the values of prior math scores to the x axis and current math scores on the y axis and that these data can be found in the _object_ called myData; it also tells R to store the result of this __function__ in an _object_ called `graphData`.
+
+---   
+
+## What are objects and functions?
+* Typical commands in R look something like: `object <- function(object)`.
+* You can replace an object with a copy of itself `object <- object` and create 
+copies of existing objects `newobject <- existingobject`.
+* Because functions are a "type" of object, you can nest functions within themselves like 
+`result <- prop.table(table(dataObject))` to affect the results.
+* You can even include math in the calling of the functions
+`result <- 100 * prop.table(table(dataObject))`; where as the example in the previous bullet would show proportions, this example would show percentages.
+
+---
+
+## What are objects and functions?
+* Because __everything in R is case sensitive__ you need to make sure that when you 
+reference an object _it is spelled exactly the same way with the same capitalization every time_.  
+* The `#` symbol is not a function or an object.  It is a way to tell R to ignore everything to the right of it so you can keep notes in your code to remind you of what the code is doing.
+* The `>` symbol is the cursor that you should see if you entered your functions/objects correctly.
+* The `+` symbol is a cursor telling you that you have some type of enclosing marks (e.g., quotation marks, brackets, parentheses, etc...) that are unbalanced. __RStudio automatically matches enclosing characters for you, just make sure not to delete them.__
+* Additionally, please pay attention to the code that are in the answer documents.  Everything that is there should be there when you submit it.  When you are using those templates for your answers, you only need to enter code/writing in the designated areas.
+
+---
+
+## Downloading Data from Blackboard
+* Everything that I put on Blackboard for the class is stored under Content.  
+* In content, there are folders called _Sample Code_, _Example Data Sets_, _Readings_, _Task I Data_,  _Task II Data_,  _Task III Data_,  _Task IV Data_, _R Script Answersheets_, _Mid-Term Data_, and _Finals Data_.  
+* Some of these folders are not visible to you yet, but they will be throughout the semester.  
+* There are also individual files __Fall-2014__, __Installing R and R Studio__, __Univariate Data Visualization__, __Bivariate and Multivariate Data Visualization__, __t-Tests__, and __Correlations__.
+
+---
+
+## Downloading Data from Blackboard
+* Inside of the _Task I Data_ folder inside of the __Content__ folder are files for: Erin Wells, Essie Hicks, Glen McInnis, Jasmine Williams, Kimberly Holmes, Laura Hall, Obearia Williams, Sharon Ratliff, Stacy Chandler, Stephanie Banks, Stacy Brocks, Suzanne Lewis, Terrance Hill, and Timothy Chambers.  
+    + If your name is not on that list, check with me to make sure that your enrollment is correct in the system.
+* After you click on your icon, it should start downloading the file to your computer, if not, there will be a link on the page telling you where to click if that happens.
+* Remember where you download the file and remember __YOU CANNOT OPEN THE FILE DIRECTLY!!! YOU NEED TO USE R TO USE THE DATA FILE!!!__
+* Remember the `library("foreign")` thing from a couple of slides ago?  __YOU CANNOT OPEN THE FILE DIRECTLY!!! YOU NEED TO USE R TO USE THE DATA FILE!!!__ This is why the foreign package exists, to read data from statistical software packages that are "foreign" to R.
+
+---   
+
+## Loading Data into R
+* Because I know Blackboard can be a pain, I included code that everyone could use to access their data from my personal server.
+```{r, eval = FALSE, echo = TRUE, tidy = TRUE}
+# On the 4th from final Slide for the 09sep2014 Class
+library("foreign")
+
+# Replace your name where you see JohnDoe:
+yourData <- as.data.frame(read.dta(#
+    "http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta"))
+
+# If I had a file, it would look like:
+myData <- as.data.frame(read.dta(#
+    "http://www.paces-consulting.org/stata/JSU/Fall2014/BillyBuchanan-task1.dta"))
+
+# The code above is what I am using for the graphs that you'll see soon
+# So remember that this slide contains the info for getting the data into R
+# for the rest of tonight; other code is shown/copied as an example only.
+```
+
+```{r, eval = TRUE, echo = FALSE, tidy = TRUE}
+# On the 4th from final Slide for the 09sep2014 Class
+library("foreign")
+
+# Replace your name where you see JohnDoe:
+yourData <- as.data.frame(read.dta(#
+    "http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta"))
+```
+
+---   
+
+## Loading Data into R
+* If you forgot where you downloaded the file, I also provided you with an example of the `file.choose()` function, which will open a dialogue box on your computer so that you can browse to find the file in a way that you are likely familiar.
+* It is not possible for me to know where everyone stores the files on their computers, so __you__ need to remember where you save the file(s) so that __you__ can access them later
+* The `file.choose()` function is perfect for cases where you can't remember exactly where you saved the file.
+* I prefer to specify the file path, or load the data directly from the server since it usually takes me less time to do things that way.
+
+---   
+
+## Finding the names of variables in your data
+* After you've loaded the data, you can use the `names()` function to find the names of the variables in your data set by putting the name of your data object between the parentheses.  
+* I also provide a code book with every assignment's data set which includes information regarding what measurements are stored in specific variables; If you look through that document you should be able to identify the measurement scale types fairly easily with a bit of deductive reasoning.
+```{r, eval = FALSE, echo = TRUE, tidy = TRUE}
+# Store the link in an object
+url <- "http://www.paces-consulting.org/stata/JSU/Fall2014/task1-documentation.txt"
+
+# Download the dataset documentation
+download.file(url, "task1-documentation.txt", method = "curl")
+```
+
+---   
+
+## Finding the names of variables in your data
+* You can view the file in R as well, but for this example I'll only show how to read a few lines.
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE}
+# Read some of the lines from the file you just downloaded above
+readLines("task1-documentation.txt", n = 10)
+```
+
+---   
+
+## Finding the names of variables in your data
+* Many of the mistakes mislabeling the graphs could have been avoided by reviewing this document to see what measurements the variables contained.
+* When the file is in R you can also view these labels using the example from the task 1 example/last weeks slides `attr(yourDataObject, "var.label")`.
+* You can also look at just a few of them at a time:
+```{r, eval = TRUE, echo = TRUE}
+attributes(yourData)$var.labels[[17]]
+attributes(yourData)$var.labels[[13]]
+```
+
+---   
+
+## Finding information about the variables in your data
+* You can find out quite a bit of detail regarding your data by using the `summary()` function.
+* You can also find out if a variable is numeric, a factor/ordered variable (nominal/ordinal), or characters (e.g., text) by using the `class()` function : `class(yourDataObject$variableNameYouWantToKnowMoreAbout)`.
+* If you want to refer to a specific variable in a `data frame` there are a few ways:
+    + The column index `yourData[, 17]`
+    + The named column index `yourData[, "pgrmthscore"]`
+    + Or the column name as a component of the data object `yourData$pgrmthscore`
+* For the graphs you've been creating, this typically is not necessary since the column references are handled differently.
+
+
+---   
+
+## Creating graphs for Exploratory Data Analysis
+* Identify each of the objects in the example below.  How many objects are there and what are their names?
+* Identify how many functions there are in the example below.  How many functions are there and what are their names?
+```{r, echo = TRUE, eval = FALSE, tidy = TRUE}
+theGraphData <- ggplot(myData, aes(x = race))
+```
+
+---
+
+## Creating graphs for Exploratory Data Analysis
+Answers:
+
+
+Answer Quality          |  Objects  | Functions  
+------------------------|-----------|-----------
+Best Answer (4)         |   5       | 2
+Acceptable Answer (3)   |   3       | 2
+!Acceptable Answer (2)  |   < 3     | < 2
+Failing Answer (1)      |   <=1     | <= 1
+
+* This also assumes that the objects/functions were correctly identified.
+
+---
+
+## Creating graphs for Exploratory Data Analysis
+```{r, echo = TRUE, eval = FALSE, tidy = TRUE, cache = FALSE}
+# Store the data for the graphs in an object & identify the x-axis variable
+theGraphData <- ggplot(myData, aes(x = race))
+
+# ggplot() is the function that you will use to define the data you will use 
+# and the variable that you would like to create a graph for
+
+# myData is the data object with your data
+
+# aes() is the aesthetics function of ggplot
+
+# x = is the argument to set the x-axis to represent a varible we choose
+
+# dataForYourGraph <- ggplot(yourData, aes(x = variableYouWantToGraph))
+
+# Saving this in an object prevents you from retyping the information over and over again
+```
+
+---   
+
+## Creating graphs for Exploratory Data Analysis
+### Nominal and Ordinal Scale Variables
+* In each of the cases below, the height of the bars indicate the number of students of a particular race.
+     + In the first two examples, that is the only variable shown.
+     + In subsequent examples, we look at the distribution of race within a subset of the population.
+* Things to think about and/or consider:
+     + Does this look like what I would expect it to look like?  Why/Why not?  
+     + Is this what the demographics of the US look like?  Why/Why not?  If no, what makes this _sample_ so different from the _population_?
+     + What comparisons can you make with these data?  How would you interpret these results?
+* __BE PREPARED TO ASK QUESTIONS AND DISCUSS THE GRAPHS__
+
+---
+
+```{r, echo = TRUE, eval = TRUE, tidy = TRUE, cache = FALSE}
+# Load the ggplot2 package for the graphs that will be created
+library("ggplot2")
+
+# Store the data for the graphs in an object & identify the x-axis variable
+theGraphData <- ggplot(yourData, aes(x = race))
+```
+
+---
+
+```{r, echo = TRUE, eval = TRUE, tidy = TRUE, fig.align = 'center', fig.width = 11, fig.height = 7, cache = FALSE}
+# Now add some geometry to this and...
+theGraphData + geom_bar()
+```
+
+---   
+
+```{r, echo = TRUE, eval = TRUE, tidy = TRUE, fig.align = 'center', fig.width = 11, fig.height = 7, cache = FALSE}
+# And if we want colored bars we can add an aesthetic option to the geometries
+theGraphData + geom_bar(aes(fill = race))
+```
+
+---
+
+```{r, echo = TRUE, eval = TRUE, tidy = TRUE, fig.align = 'center', fig.width = 11, fig.height = 7, cache = FALSE}
+# If you wanted to start faceting the graph you could add information about how the data will be faceted
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(~ grade)
+```
+
+---
+
+```{r, echo = TRUE, eval = TRUE, tidy = TRUE, fig.align = 'center', fig.width = 11, fig.height = 7, cache = FALSE}
+# You could specify how you wanted to facets to appear as well
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(~ grade, nrow = 3)
+```
+
+---
+
+```{r, echo = TRUE, eval = TRUE, tidy = TRUE, fig.align = 'center', fig.width = 11, fig.height = 7, cache = FALSE}
+# We can map the color fill of the bars to a different variable to produce stacked bar graphs as well
+theGraphData + geom_bar(aes(fill = female)) + facet_wrap(~ grade, nrow = 2)
+```
+
+---   
+
+## Creating graphs for Exploratory Data Analysis
+### Intervallic and Ratio Scale Variables
+* Because intervallic and ratio scale variables have distinctly different mathematical properties, we need to visualize them a bit differently.
+* Since the commands we are using from `ggplot2` this week are more flexible, we can do a bit more to show some of the things we were discussing last week.
+    + For example, we can layer multiple graphs on top of one another to see/show how the parameters change values.
+    + We can layer different types of graphs on top of each other to examine the similarities and differences between the graph types.
+* Unlike graphs for nominal/ordinal scale variables, now we also need to interpret our x-axis based on it's set of values.
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE}
+# Enter the code to create the graph for your second intervallic 
+# scale variable on the line below
+intervallicGraph <- ggplot(yourData, aes(x = cgrrlascore))
+```   
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE}
+# Build the graph with layers
+intervallicGraph + geom_histogram(binwidth = 10, fill = "blue", 
+aes(y = ..density..), alpha = .35) + geom_density(color = "orange", size = 0.75, 
+adjust = .25)
+```
+
+---   
+
+* What are some things that you notice about the different features of this graph?
+     + Are the bars too wide, too narrow, just right?  Why/Why not?
+     + Are the lines too sensitive, too smooth, somewhere in between?  Why/Why not?
+     + Is this what we think the distribution of test scores really looks like?  Why/Why not?
+* Is there anything concerning/reassuring to you about this distribution?  
+* Does this look like a Gaussian distribution (e.g., the bell curve)?  Why/Why not?  What does that shape distribution mean/imply?
+
+---
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE, cache = FALSE}
+qplot(pgrmthscore, data = yourData)
+```
+
+--- 
+
+* What variable am I graphing?  
+    + What's the name of the variable being graphed?
+    + What does that variable mean/what measurements are stored in it?
+* Is it easier to interpret graphs that are annotated or those that only include 
+variable names?
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE, cache = FALSE}
+qplot(pgrmthscore, data = yourData, main = attributes(yourData)$var.labels[[13]])
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE, cache = FALSE}
+qplot(pgrmthscore, data = yourData, main = attributes(yourData)$var.labels[[18]])
+```
+
+---   
+
+* What was the difference between the last two graphs?
+    + Why were those differences significant/insignificant?
+    + Did either of them change how __you__ interpreted the graphs?
+* Which graph more accurately represents the underlying data?
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE, fig.align = "center", fig.width = 9, fig.height = 6}
+# Add labels to both axes for your graph 
+qplot(pgrrlascore, cgrrlascore, data = yourData, #
+      xlab = "Prior RLA Score", ylab = "Current RLA Score")
+```
+
+---    
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE, fig.align = "center", fig.width = 9, fig.height = 6}
+# And if we want to highlight the trend in the data, we can add a line of best fit
+qplot(pgrrlascore, cgrrlascore, data = yourData, #
+      xlab = "Prior RLA Score", ylab = "Current RLA Score", alpha = I(0.15)) + #
+      geom_smooth(size = 2, method = "lm")
+```
+
+---  
+
+## Additional Resources
+* A colleague of mine in Wisconsin has also posted a good number of helpful tutorials to his Github repository.  In particular, I'd recommend looking at:
+     + [R Tutorial for Educators](https://github.com/jknowles/r_tutorial_ed)
+     + [Presentation on Using Data Visualization in Ed Research and Policy Analysis](https://github.com/jknowles/dataviz4ed)
+* You can also install some packages that he's written to try making more sophisticated analysis more accessible:
+
+```{r, eval = FALSE, echo = TRUE}
+# First you'll need the package I mentioned above as being fairly helpful
+install.packages("devtools", dep = TRUE)
+
+# Then you can install Education Evaluation and Policy Analysis tools
+devtools::install_github("jknowles/eeptools")
+
+# And even the code for Wisconsin's Early Warning System
+devtools::install_github("jknowles/EWStools")
+```
+
+---   
+
+## Additional Resources
+* There's also all of the links that are at the end of the first weeks slides. 
+* I've copied them here for your convenience.
+
+---
+
+## Additional Resources for Learning R
+* From the UCLA Statistics Consulting Group
+    + [Installing R](http://www.ats.ucla.edu/stat/r/icu/)
+    + [R Intro](http://www.ats.ucla.edu/stat/r/seminars/intro.htm)
+    + [Starter Kit](http://www.ats.ucla.edu/stat/r/sk/)
+    + [Data Visualization](http://www.ats.ucla.edu/stat/r/gbe/default.htm)
+    + [Learning Modules](http://www.ats.ucla.edu/stat/r/modules/)
+    + [Code Fragments](http://www.ats.ucla.edu/stat/r/code_fragments.htm)
+    + [Frequently Asked Questions About R](http://www.ats.ucla.edu/stat/r/faq/default.htm)
+* From an R Example website
+    + [Some Short Tutorials](http://www.statmethods.net)
+* [Resources Recommended by a Highly Respected Statistician](http://andrewgelman.com/2010/06/03/how_best_to_lea/)
+
+---
+
+## Additional Resources for Learning R (cont.)
+* From Princeton's Statistics Consultants
+    + [Intro to R Studio](http://dss.princeton.edu/training/RStudio101.pdf)
+    + [Intro to R](http://data.princeton.edu/R/)
+    + [Nice Short Videos Recommended by Princeton](http://www.twotorials.com)
+* [R Videos from U Colorado Denver](http://math.ucdenver.edu/RTutorial/)
+* Websites used by the R-user Community
+    + [R News, Announcements, and Tutorials](http://www.r-bloggers.com)
+    + [Statistics Messageboard](http://stats.stackexchange.com/questions/tagged/r)
+    + [R Messageboard](http://stackoverflow.com/tags/r)
+* [The Website for the Graphics Package We'll be Using](http://ggplot2.org)    
+
+---
+
+## References
+1. Field, A., Miles, J., & Field, Z. (2012) *Discovering statistics using R.* New York City, NY: Sage. p. 63
+2. Ibid. p. 64
+3. Ibid. p. 78

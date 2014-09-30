@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Review:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Review:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Review:</h1>
+    <h2>R Basics and Interpreting Graphs</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+strong {
+  font-size: 16pt;
+  font-weight: bold;
+}
+</style>
+
+<style>
+em {
+  fonnt-size: 16pt;
+  font-style: italic
+}
+</style>
+
+<h2>Overview</h2>
+
+<ul>
+<li>Review:
+
+<ul>
+<li>Syllabus</li>
+</ul></li>
+<li>R Basics 
+
+<ul>
+<li>What is R and why are we using it?</li>
+<li>Getting R and RStudio</li>
+<li>Installing and loading packages</li>
+<li>What are objects and functions?</li>
+<li>Downloading Data </li>
+<li>Loading Data into R</li>
+<li>Finding the names of variables in your data</li>
+<li>Finding information about the variables in your data</li>
+</ul></li>
+<li>(continued on next slide)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Overview (continued)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Creating &amp; Interpreting Graphs</li>
+<li>Additional Resources</li>
+<li>Next class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Syllabus</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>On p. 6 of the syllabus, you should have read :</p>
+
+<p><strong>Everyone must submit at least one (1) question per week on the Blackboard Message Boards upcoming material by Friday at 11:59 pm before class (e.g., 1st questions will be due by 11:59pm 29AUG2014); I will use your questions when preparing slides, activities, and the talks for the next class.</strong></p>
+
+<p><em>If you&#39;re concerned about your grade, you need to make sure that you are participating.</em></p>
+
+<p>Go to <a href="https://help.blackboard.com/en-us/Learn/9.1_SP_14/Student/050_Course_Content/010_Course_Content_Areas">Blackboard Student Help</a> for general help about the Blackboard platform...OR...when you go to the <a href="http://www.jsums.edu/ait/blackboard/index.htm">JSU Blackboard Homepage</a>, you view the Student Orientation, Videos &amp; Tutorials, or the FAQ page (the FAQ is not the home page) to get support specific to the way JSU has set up Blackboard.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Additional Info</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>I encourage everyone to share code because there are often several different ways to come up with the same end result.</li>
+<li>However, it is probably a good idea to make sure you check the code that has been shared with you to make sure that it does what you want.
+
+<ul>
+<li>Several people ended up losing a significant number of points because they did not check to see if the code that was shared with them was the correct code to get the result they needed.</li>
+<li>Had several students not had exactly the same issues with the exact same code it would not have been apparent.</li>
+</ul></li>
+<li>That said, check the code that people give you.  Run it and make sure it does what it should and be careful about how you copy and paste the code into your answer document.<br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>What is R and why are we using it?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Here is a very brief description of R.</p>
+
+<ul>
+<li><strong>R</strong> is a free software environment for statistical computing and graphics.  It is what&#39;s known as open-source, which means that unlike commercial software companies that protectively hide away the code on which their software is based, the people who developed <strong>R</strong> allow everyone to access their code.<em>1</em></li>
+</ul>
+
+<p>And some of the reasons why I chose to use it for the course.</p>
+
+<ul>
+<li>The main advantages of using <strong>R</strong> are there it is free, and it is a versatile and dynamic environment.  Its open source format and the ability of statisticians to contribute packages to the CRAN mean that there are many things that you can do that cannot be done in commercially available packages.  In addition, it is a rapidly expanding tool and can respond quickly to new developments in data analysis.  These advantages make <strong>R</strong> an extremely powerful tool.<em>2</em> </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>What is R and why are we using it? (continued)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>There is a critical capacity gap in schools and districts across the state to support classroom educators and educational leaders analyze data to make informed decisions about policy and practice.</li>
+<li>Resources are scarce in schools and districts, so it was worth it to me to force myself to learn enough of the R language to teach the course if it meant increasing access to data analysis and visualization capabilities for others around the state.</li>
+<li>Currently, R-Programmers are the highest paid programmers in the computer industry, so it is also about providing you with an increasingly valuable and marketable skill set that you could use to advance your careers.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Getting R and RStudio</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Go to the R homepage <a href="http://cran.r-project.org">http://cran.r-project.org</a>.
+
+<ul>
+<li>If your computer runs on Windows, click on the link <a href="http://cran.r-project.org/bin/windows/">Download R for Windows</a>.</li>
+<li>If your computer runs on Mac OSX, click on the link <a href="http://cran.r-project.org/bin/macosx/">Download R for (Mac) OS X</a>.</li>
+<li>I&#39;m assuming everyone is using Windows, but it should be easy enough to click through things and figure it out if you&#39;re using OSX or Linux.</li>
+</ul></li>
+<li>Next, Click on the link <a href="http://cran.r-project.org/bin/windows/base/">install R for the first time</a>.</li>
+<li>Last, Click on the link <a href="http://cran.r-project.org/bin/windows/base/R-3.1.1-win.exe">Download R 3.1.1 for Windows</a>.</li>
+<li>If you&#39;re asked whether or not you want to &quot;Save&quot; or &quot;Run&quot; the file, it&#39;s easiest to Click on &quot;Run&quot;; Run will start installing R AFTER it finished downloading; Save will just save the installation program on your computer and <strong>WILL NOT INSTALL THE PROGRAM UNTIL YOU RUN IT.</strong><br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Getting R and RStudio</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>When the installation program begins running, you can click &quot;OK&quot; or &quot;Next&quot; for all of the choices unless you wanted to customize the download.<br></li>
+<li>The only thing you should probably modify is to uncheck the box next to &quot;32-bit Files&quot; on the &quot;Select Components&quot; screen.</li>
+<li>Once R has <strong>COMPLETELY FINISHED</strong> the installation process, then you can install RStudio if you&#39;d like.</li>
+<li>To install RStudio, first go to the <a href="http://www.rstudio.com/">RStudio Home Page</a> and click on the box <a href="http://www.rstudio.com/products/RStudio/">Download RStudio</a>.</li>
+<li>Next click on the <a href="http://www.rstudio.com/products/RStudio/#Desk">Desktop</a> link to move to the part of the page where you will see a link called <a href="http://www.rstudio.com/products/rstudio/download/">Download RStudio Desktop</a>.</li>
+<li>Assuming you&#39;re using Windows, you&#39;ll then want to select the link called <a href="http://download1.rstudio.org/RStudio-0.98.1062.exe">RStudio 0.98.1062 - Windows XP/Vista/7/8</a>.</li>
+<li>You should then be able to follow the same instructions from above to work through installing RStudio.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Getting R and RStudio</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The course text has instructions for downloading/installing R on pages 65-66.</li>
+<li>I also posted a PDF under &quot;Contents&quot; called &quot;Installing R and R Studio&quot; on Blackboard; this example includes screen shots, to give you some idea of how things should/might look on the website, provides more details about how things get installed, and also includes information about installing packages in R.</li>
+<li>If the computer in the lab does not have RStudio it does not matter.  RStudio is just an interface for R (think of it like a new paint job on a car; still the same beat up car, but now it has shiny new paint).</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Installing and loading packages</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>If you know the package that you want to install then the simplest way is to execute this command:
+<code>install.packages(&quot;package.name&quot;)</code> in which &#39;package.name&#39; is replaced by the name of the package that you&#39;d like installed...Once a package is installed you need to reference it for <strong>R</strong> to know that you&#39;re using it.  <em>You need to install the package only once but you need to reference it each time you start a new session of R.</em>  To reference a package, we simply execut this general command: <code>library(&quot;package.name&quot;)</code> in which &#39;package.name&#39; is replaced by the name of the package that you&#39;d like to use.<em>3</em></p>
+
+<p>Another example can be found in the slides from the first week:</p>
+
+<pre><code class="r"># If you did not install this package use this code to install it
+install.packages(&quot;ggplot2&quot;, dep = TRUE)
+
+# Then you can load the graph package
+library(&quot;ggplot2&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Installing and loading packages</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Althought we&#39;ve not used it thus far, it would probably be a good idea to 
+install the package named <code>devtools</code>.</li>
+<li>The first time you try to install a package it will ask you to select a mirror; a mirror is just a copy of the code on a specific server;  I tend to favor the mirrors located in WA since they are generally kept up to date and are pretty much always available.</li>
+</ul>
+
+<pre><code class="r"># Install the devtools package from CRAN
+install.packages(&quot;devtools&quot;, dep = TRUE)
+
+# With devtools you can install packages directly from github like this
+devtools::install_github(&quot;rstudio/ggvis&quot;)
+
+# You&#39;ll need this installed if you want to use anything cutting edge or
+# to install any of the packages used to create interactive graphics.
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Installing and loading packages</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Because I generate the data files for the course in <a href="http://www.stata.com">Stata</a>, the <strong>FIRST</strong> thing you should always do when starting R is use <code>library(&quot;foreign&quot;)</code> to load the foreign data package in R.  <strong>This is the only way you will be able to work with the data files I create.</strong> <em>If you try to open one of these files in a text editor or word processor it will look like a garbled mess.</em>  <strong>TO OPEN THE .dta FILES YOU NEED TO USE R; TO LOAD .dta FILES INTO R YOU NEED TO LOAD THE FOREIGN PACKAGE.</strong>  </p>
+
+<pre><code class="r"># Load the foreign data package
+library(&quot;foreign&quot;)
+
+# If you wanted to see what data files this package can read enter
+`?`(foreign)
+
+# There are other packages available to read in other types of data files,
+# but the foreign package will get the job done for this course and is
+# commonly used in the R community.
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>What are objects and functions?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>This is a very simplified definition, but you can thing of objects and functions like:
+
+<ul>
+<li>Objects store things (e.g., data, results, graphs, etc...).</li>
+<li>Functions do things to objects (e.g., add a layer to a graph object, create a graph, etc...).</li>
+</ul></li>
+<li>When you create something like <code>graphData &lt;- ggplot(myData, aes(x = pgrmthscore, y = cgrmthscore))</code> you&#39;re telling the <strong>function</strong> <code>ggplot</code> that you want to map the values of prior math scores to the x axis and current math scores on the y axis and that these data can be found in the <em>object</em> called myData; it also tells R to store the result of this <strong>function</strong> in an <em>object</em> called <code>graphData</code>.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>What are objects and functions?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Typical commands in R look something like: <code>object &lt;- function(object)</code>.</li>
+<li>You can replace an object with a copy of itself <code>object &lt;- object</code> and create 
+copies of existing objects <code>newobject &lt;- existingobject</code>.</li>
+<li>Because functions are a &quot;type&quot; of object, you can nest functions within themselves like 
+<code>result &lt;- prop.table(table(dataObject))</code> to affect the results.</li>
+<li>You can even include math in the calling of the functions
+<code>result &lt;- 100 * prop.table(table(dataObject))</code>; where as the example in the previous bullet would show proportions, this example would show percentages.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>What are objects and functions?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Because <strong>everything in R is case sensitive</strong> you need to make sure that when you 
+reference an object <em>it is spelled exactly the same way with the same capitalization every time</em>.<br></li>
+<li>The <code>#</code> symbol is not a function or an object.  It is a way to tell R to ignore everything to the right of it so you can keep notes in your code to remind you of what the code is doing.</li>
+<li>The <code>&gt;</code> symbol is the cursor that you should see if you entered your functions/objects correctly.</li>
+<li>The <code>+</code> symbol is a cursor telling you that you have some type of enclosing marks (e.g., quotation marks, brackets, parentheses, etc...) that are unbalanced. <strong>RStudio automatically matches enclosing characters for you, just make sure not to delete them.</strong></li>
+<li>Additionally, please pay attention to the code that are in the answer documents.  Everything that is there should be there when you submit it.  When you are using those templates for your answers, you only need to enter code/writing in the designated areas.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Downloading Data from Blackboard</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Everything that I put on Blackboard for the class is stored under Content.<br></li>
+<li>In content, there are folders called <em>Sample Code</em>, <em>Example Data Sets</em>, <em>Readings</em>, <em>Task I Data</em>,  <em>Task II Data</em>,  <em>Task III Data</em>,  <em>Task IV Data</em>, <em>R Script Answersheets</em>, <em>Mid-Term Data</em>, and <em>Finals Data</em>.<br></li>
+<li>Some of these folders are not visible to you yet, but they will be throughout the semester.<br></li>
+<li>There are also individual files <strong>Fall-2014</strong>, <strong>Installing R and R Studio</strong>, <strong>Univariate Data Visualization</strong>, <strong>Bivariate and Multivariate Data Visualization</strong>, <strong>t-Tests</strong>, and <strong>Correlations</strong>.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Downloading Data from Blackboard</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Inside of the <em>Task I Data</em> folder inside of the <strong>Content</strong> folder are files for: Erin Wells, Essie Hicks, Glen McInnis, Jasmine Williams, Kimberly Holmes, Laura Hall, Obearia Williams, Sharon Ratliff, Stacy Chandler, Stephanie Banks, Stacy Brocks, Suzanne Lewis, Terrance Hill, and Timothy Chambers.<br>
+
+<ul>
+<li>If your name is not on that list, check with me to make sure that your enrollment is correct in the system.</li>
+</ul></li>
+<li>After you click on your icon, it should start downloading the file to your computer, if not, there will be a link on the page telling you where to click if that happens.</li>
+<li>Remember where you download the file and remember <strong>YOU CANNOT OPEN THE FILE DIRECTLY!!! YOU NEED TO USE R TO USE THE DATA FILE!!!</strong></li>
+<li>Remember the <code>library(&quot;foreign&quot;)</code> thing from a couple of slides ago?  <strong>YOU CANNOT OPEN THE FILE DIRECTLY!!! YOU NEED TO USE R TO USE THE DATA FILE!!!</strong> This is why the foreign package exists, to read data from statistical software packages that are &quot;foreign&quot; to R.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Loading Data into R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Because I know Blackboard can be a pain, I included code that everyone could use to access their data from my personal server.</li>
+</ul>
+
+<pre><code class="r"># On the 4th from final Slide for the 09sep2014 Class
+library(&quot;foreign&quot;)
+
+# Replace your name where you see JohnDoe:
+yourData &lt;- as.data.frame(read.dta(#
+    &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta&quot;))
+
+# If I had a file, it would look like:
+myData &lt;- as.data.frame(read.dta(#
+    &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/BillyBuchanan-task1.dta&quot;))
+
+# The code above is what I am using for the graphs that you&#39;ll see soon
+# So remember that this slide contains the info for getting the data into R
+# for the rest of tonight; other code is shown/copied as an example only.
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Loading Data into R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>If you forgot where you downloaded the file, I also provided you with an example of the <code>file.choose()</code> function, which will open a dialogue box on your computer so that you can browse to find the file in a way that you are likely familiar.</li>
+<li>It is not possible for me to know where everyone stores the files on their computers, so <strong>you</strong> need to remember where you save the file(s) so that <strong>you</strong> can access them later</li>
+<li>The <code>file.choose()</code> function is perfect for cases where you can&#39;t remember exactly where you saved the file.</li>
+<li>I prefer to specify the file path, or load the data directly from the server since it usually takes me less time to do things that way.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Finding the names of variables in your data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>After you&#39;ve loaded the data, you can use the <code>names()</code> function to find the names of the variables in your data set by putting the name of your data object between the parentheses.<br></li>
+<li>I also provide a code book with every assignment&#39;s data set which includes information regarding what measurements are stored in specific variables; If you look through that document you should be able to identify the measurement scale types fairly easily with a bit of deductive reasoning.</li>
+</ul>
+
+<pre><code class="r"># Store the link in an object
+url &lt;- &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/task1-documentation.txt&quot;
+
+# Download the dataset documentation
+download.file(url, &quot;task1-documentation.txt&quot;, method = &quot;curl&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Finding the names of variables in your data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>You can view the file in R as well, but for this example I&#39;ll only show how to read a few lines.</li>
+</ul>
+
+<pre><code class="r"># Read some of the lines from the file you just downloaded above
+readLines(&quot;task1-documentation.txt&quot;, n = 10)
+</code></pre>
+
+<pre><code>##  [1] &quot;-------------------------------------------------------------------------------------------------------------------&quot;
+##  [2] &quot;      name:  &lt;unnamed&gt;&quot;                                                                                             
+##  [3] &quot;       log:  /Users/billy/Desktop/Dropbox/JSU/Fall2014/task1/task1-documentation.txt&quot;                               
+##  [4] &quot;  log type:  text&quot;                                                                                                  
+##  [5] &quot; opened on:   9 Sep 2014, 13:43:16&quot;                                                                                 
+##  [6] &quot;&quot;                                                                                                                   
+##  [7] &quot;. desc&quot;                                                                                                             
+##  [8] &quot;&quot;                                                                                                                   
+##  [9] &quot;Contains data from JohnDoe-task1.dta&quot;                                                                               
+## [10] &quot;  obs:        53,630                          &quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Finding the names of variables in your data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Many of the mistakes mislabeling the graphs could have been avoided by reviewing this document to see what measurements the variables contained.</li>
+<li>When the file is in R you can also view these labels using the example from the task 1 example/last weeks slides <code>attr(yourDataObject, &quot;var.label&quot;)</code>.</li>
+<li>You can also look at just a few of them at a time:</li>
+</ul>
+
+<pre><code class="r">attributes(yourData)$var.labels[[17]]
+</code></pre>
+
+<pre><code>## [1] &quot;Prior Mathematics Scaled Score&quot;
+</code></pre>
+
+<pre><code class="r">attributes(yourData)$var.labels[[13]]
+</code></pre>
+
+<pre><code>## [1] &quot;Current Grade Level of the Student&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Finding information about the variables in your data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>You can find out quite a bit of detail regarding your data by using the <code>summary()</code> function.</li>
+<li>You can also find out if a variable is numeric, a factor/ordered variable (nominal/ordinal), or characters (e.g., text) by using the <code>class()</code> function : <code>class(yourDataObject$variableNameYouWantToKnowMoreAbout)</code>.</li>
+<li>If you want to refer to a specific variable in a <code>data frame</code> there are a few ways:
+
+<ul>
+<li>The column index <code>yourData[, 17]</code></li>
+<li>The named column index <code>yourData[, &quot;pgrmthscore&quot;]</code></li>
+<li>Or the column name as a component of the data object <code>yourData$pgrmthscore</code></li>
+</ul></li>
+<li>For the graphs you&#39;ve been creating, this typically is not necessary since the column references are handled differently.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Creating graphs for Exploratory Data Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Identify each of the objects in the example below.  How many objects are there and what are their names?</li>
+<li>Identify how many functions there are in the example below.  How many functions are there and what are their names?</li>
+</ul>
+
+<pre><code class="r">theGraphData &lt;- ggplot(myData, aes(x = race))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Creating graphs for Exploratory Data Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Answers:</p>
+
+<table><thead>
+<tr>
+<th>Answer Quality</th>
+<th>Objects</th>
+<th>Functions</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Best Answer (4)</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Acceptable Answer (3)</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>!Acceptable Answer (2)</td>
+<td>&lt; 3</td>
+<td>&lt; 2</td>
+</tr>
+<tr>
+<td>Failing Answer (1)</td>
+<td>&lt;=1</td>
+<td>&lt;= 1</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>This also assumes that the objects/functions were correctly identified.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Creating graphs for Exploratory Data Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Store the data for the graphs in an object &amp; identify the x-axis variable
+theGraphData &lt;- ggplot(myData, aes(x = race))
+
+# ggplot() is the function that you will use to define the data you will use
+# and the variable that you would like to create a graph for
+
+# myData is the data object with your data
+
+# aes() is the aesthetics function of ggplot
+
+# x = is the argument to set the x-axis to represent a varible we choose
+
+# dataForYourGraph &lt;- ggplot(yourData, aes(x = variableYouWantToGraph))
+
+# Saving this in an object prevents you from retyping the information over
+# and over again
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Creating graphs for Exploratory Data Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Nominal and Ordinal Scale Variables</h3>
+
+<ul>
+<li>In each of the cases below, the height of the bars indicate the number of students of a particular race.
+
+<ul>
+<li>In the first two examples, that is the only variable shown.</li>
+<li>In subsequent examples, we look at the distribution of race within a subset of the population.</li>
+</ul></li>
+<li>Things to think about and/or consider:
+
+<ul>
+<li>Does this look like what I would expect it to look like?  Why/Why not?<br></li>
+<li>Is this what the demographics of the US look like?  Why/Why not?  If no, what makes this <em>sample</em> so different from the <em>population</em>?</li>
+<li>What comparisons can you make with these data?  How would you interpret these results?</li>
+</ul></li>
+<li><strong>BE PREPARED TO ASK QUESTIONS AND DISCUSS THE GRAPHS</strong></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Load the ggplot2 package for the graphs that will be created
+library(&quot;ggplot2&quot;)
+
+# Store the data for the graphs in an object &amp; identify the x-axis variable
+theGraphData &lt;- ggplot(yourData, aes(x = race))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Now add some geometry to this and...
+theGraphData + geom_bar()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># And if we want colored bars we can add an aesthetic option to the
+# geometries
+theGraphData + geom_bar(aes(fill = race))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># If you wanted to start faceting the graph you could add information about
+# how the data will be faceted
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(~grade)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># You could specify how you wanted to facets to appear as well
+theGraphData + geom_bar(aes(fill = race)) + facet_wrap(~grade, nrow = 3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># We can map the color fill of the bars to a different variable to produce
+# stacked bar graphs as well
+theGraphData + geom_bar(aes(fill = female)) + facet_wrap(~grade, nrow = 2)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-17.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Creating graphs for Exploratory Data Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Intervallic and Ratio Scale Variables</h3>
+
+<ul>
+<li>Because intervallic and ratio scale variables have distinctly different mathematical properties, we need to visualize them a bit differently.</li>
+<li>Since the commands we are using from <code>ggplot2</code> this week are more flexible, we can do a bit more to show some of the things we were discussing last week.
+
+<ul>
+<li>For example, we can layer multiple graphs on top of one another to see/show how the parameters change values.</li>
+<li>We can layer different types of graphs on top of each other to examine the similarities and differences between the graph types.</li>
+</ul></li>
+<li>Unlike graphs for nominal/ordinal scale variables, now we also need to interpret our x-axis based on it&#39;s set of values.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Enter the code to create the graph for your second intervallic scale
+# variable on the line below
+intervallicGraph &lt;- ggplot(yourData, aes(x = cgrrlascore))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Build the graph with layers
+intervallicGraph + geom_histogram(binwidth = 10, fill = &quot;blue&quot;, aes(y = ..density..), 
+    alpha = 0.35) + geom_density(color = &quot;orange&quot;, size = 0.75, adjust = 0.25)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-19.png" alt="plot of chunk unnamed-chunk-19"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-37" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>What are some things that you notice about the different features of this graph?
+
+<ul>
+<li>Are the bars too wide, too narrow, just right?  Why/Why not?</li>
+<li>Are the lines too sensitive, too smooth, somewhere in between?  Why/Why not?</li>
+<li>Is this what we think the distribution of test scores really looks like?  Why/Why not?</li>
+</ul></li>
+<li>Is there anything concerning/reassuring to you about this distribution?<br></li>
+<li>Does this look like a Gaussian distribution (e.g., the bell curve)?  Why/Why not?  What does that shape distribution mean/imply?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">qplot(pgrmthscore, data = yourData)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-20.png" alt="plot of chunk unnamed-chunk-20"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-39" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>What variable am I graphing?<br>
+
+<ul>
+<li>What&#39;s the name of the variable being graphed?</li>
+<li>What does that variable mean/what measurements are stored in it?</li>
+</ul></li>
+<li>Is it easier to interpret graphs that are annotated or those that only include 
+variable names?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-40" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">qplot(pgrmthscore, data = yourData, main = attributes(yourData)$var.labels[[13]])
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-21.png" alt="plot of chunk unnamed-chunk-21"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-41" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">qplot(pgrmthscore, data = yourData, main = attributes(yourData)$var.labels[[18]])
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-22.png" alt="plot of chunk unnamed-chunk-22"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-42" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>What was the difference between the last two graphs?
+
+<ul>
+<li>Why were those differences significant/insignificant?</li>
+<li>Did either of them change how <strong>you</strong> interpreted the graphs?</li>
+</ul></li>
+<li>Which graph more accurately represents the underlying data?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-43" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Add labels to both axes for your graph 
+qplot(pgrrlascore, cgrrlascore, data = yourData, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-23.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-44" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># And if we want to highlight the trend in the data, we can add a line of best fit
+qplot(pgrrlascore, cgrrlascore, data = yourData, #
+      xlab = &quot;Prior RLA Score&quot;, ylab = &quot;Current RLA Score&quot;, alpha = I(0.15)) + #
+      geom_smooth(size = 2, method = &quot;lm&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-24.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-45" style="background:;">
+  <hgroup>
+    <h2>Additional Resources</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A colleague of mine in Wisconsin has also posted a good number of helpful tutorials to his Github repository.  In particular, I&#39;d recommend looking at:
+
+<ul>
+<li><a href="https://github.com/jknowles/r_tutorial_ed">R Tutorial for Educators</a></li>
+<li><a href="https://github.com/jknowles/dataviz4ed">Presentation on Using Data Visualization in Ed Research and Policy Analysis</a></li>
+</ul></li>
+<li>You can also install some packages that he&#39;s written to try making more sophisticated analysis more accessible:</li>
+</ul>
+
+<pre><code class="r"># First you&#39;ll need the package I mentioned above as being fairly helpful
+install.packages(&quot;devtools&quot;, dep = TRUE)
+
+# Then you can install Education Evaluation and Policy Analysis tools
+devtools::install_github(&quot;jknowles/eeptools&quot;)
+
+# And even the code for Wisconsin&#39;s Early Warning System
+devtools::install_github(&quot;jknowles/EWStools&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-46" style="background:;">
+  <hgroup>
+    <h2>Additional Resources</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>There&#39;s also all of the links that are at the end of the first weeks slides. </li>
+<li>I&#39;ve copied them here for your convenience.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-47" style="background:;">
+  <hgroup>
+    <h2>Additional Resources for Learning R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>From the UCLA Statistics Consulting Group
+
+<ul>
+<li><a href="http://www.ats.ucla.edu/stat/r/icu/">Installing R</a></li>
+<li><a href="http://www.ats.ucla.edu/stat/r/seminars/intro.htm">R Intro</a></li>
+<li><a href="http://www.ats.ucla.edu/stat/r/sk/">Starter Kit</a></li>
+<li><a href="http://www.ats.ucla.edu/stat/r/gbe/default.htm">Data Visualization</a></li>
+<li><a href="http://www.ats.ucla.edu/stat/r/modules/">Learning Modules</a></li>
+<li><a href="http://www.ats.ucla.edu/stat/r/code_fragments.htm">Code Fragments</a></li>
+<li><a href="http://www.ats.ucla.edu/stat/r/faq/default.htm">Frequently Asked Questions About R</a></li>
+</ul></li>
+<li>From an R Example website
+
+<ul>
+<li><a href="http://www.statmethods.net">Some Short Tutorials</a></li>
+</ul></li>
+<li><a href="http://andrewgelman.com/2010/06/03/how_best_to_lea/">Resources Recommended by a Highly Respected Statistician</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-48" style="background:;">
+  <hgroup>
+    <h2>Additional Resources for Learning R (cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>From Princeton&#39;s Statistics Consultants
+
+<ul>
+<li><a href="http://dss.princeton.edu/training/RStudio101.pdf">Intro to R Studio</a></li>
+<li><a href="http://data.princeton.edu/R/">Intro to R</a></li>
+<li><a href="http://www.twotorials.com">Nice Short Videos Recommended by Princeton</a></li>
+</ul></li>
+<li><a href="http://math.ucdenver.edu/RTutorial/">R Videos from U Colorado Denver</a></li>
+<li>Websites used by the R-user Community
+
+<ul>
+<li><a href="http://www.r-bloggers.com">R News, Announcements, and Tutorials</a></li>
+<li><a href="http://stats.stackexchange.com/questions/tagged/r">Statistics Messageboard</a></li>
+<li><a href="http://stackoverflow.com/tags/r">R Messageboard</a></li>
+</ul></li>
+<li><a href="http://ggplot2.org">The Website for the Graphics Package We&#39;ll be Using</a><br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-49" style="background:;">
+  <hgroup>
+    <h2>References</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Field, A., Miles, J., &amp; Field, Z. (2012) <em>Discovering statistics using R.</em> New York City, NY: Sage. p. 63</li>
+<li>Ibid. p. 64</li>
+<li>Ibid. p. 78</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title=''>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Overview (continued)'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Syllabus'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Additional Info'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='What is R and why are we using it?'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='What is R and why are we using it? (continued)'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Getting R and RStudio'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Getting R and RStudio'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Getting R and RStudio'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Installing and loading packages'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Installing and loading packages'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Installing and loading packages'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='What are objects and functions?'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='What are objects and functions?'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='What are objects and functions?'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Downloading Data from Blackboard'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Downloading Data from Blackboard'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Loading Data into R'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Loading Data into R'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Finding the names of variables in your data'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Finding the names of variables in your data'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Finding the names of variables in your data'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Finding information about the variables in your data'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Creating graphs for Exploratory Data Analysis'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Creating graphs for Exploratory Data Analysis'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Creating graphs for Exploratory Data Analysis'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Creating graphs for Exploratory Data Analysis'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title=''>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title=''>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title=''>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title=''>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title=''>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title=''>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Creating graphs for Exploratory Data Analysis'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title=''>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title=''>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title=''>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title=''>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title=''>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title=''>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title=''>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title=''>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title=''>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title=''>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='Additional Resources'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title='Additional Resources'>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title='Additional Resources for Learning R'>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title='Additional Resources for Learning R (cont.)'>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='References'>
+         49
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
