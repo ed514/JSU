@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Descriptive Statistics:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Descriptive Statistics:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Descriptive Statistics:</h1>
+    <h2>Measures of Central Tendency and Summarizing Data</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review:
+
+<ul>
+<li>Syllabus</li>
+</ul></li>
+<li>Describing Nominal/Ordinal Scale Data 
+
+<ul>
+<li>Frequencies</li>
+<li>Proportions</li>
+<li>Percentages</li>
+<li>Cross tabulations</li>
+<li>Finding the number of unique categories</li>
+</ul></li>
+<li>Describing Intervallic/Ratio Scale Data
+
+<ul>
+<li>Location</li>
+<li>Deviance/Variance</li>
+<li>Higher order parameters</li>
+</ul></li>
+<li>Next Class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The lecture tonight is fairly compact, so I&#39;ll provide some time a bit later for you to ask some last minute questions related to the syntax</li>
+<li>Keep practicing the skills required to create graphs because you&#39;ll need to use it later in the semester</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Loading Data into R</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>*If you need additional help for the next set of commands you can use <code>?table</code>, <code>?prop.table</code>, and <code>?round</code> to see the help files for each of these commands.</p>
+
+<pre><code class="r">library(&quot;foreign&quot;); library(&quot;ggplot2&quot;)
+
+# Load some data for the examples
+yourData &lt;- as.data.frame(read.dta(#
+    &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta&quot;))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Describing Nominal/Ordinal Scale Data</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Frequencies tell you the number of observations per category</li>
+<li>You can use the terms proportions and percentages interchangably when describing categorical data since you can only have up to 100% </li>
+<li>Proportions tell you the ratio of the number of observations in that category compared to all observations</li>
+<li>The marginal proportions give you the proportions for based on the total number of observations per row/column in a cross tabulation</li>
+<li>Sometimes you&#39;ll also want to know the number of unique categories</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Frequencies</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">table(yourData$race)
+</code></pre>
+
+<pre><code>## 
+##                               Asian           Black or African American 
+##                                   5                               27413 
+##                  Hispanic or Latino                   Two or More Races 
+##                                 380                                   0 
+##   American Indian or Alaskan Native Native Hawaiian or Pacific Islander 
+##                                   0                                   0 
+##                               White 
+##                               25832
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">table(yourData$cgrrlalev)
+</code></pre>
+
+<pre><code>## 
+##    Minimal      Basic Proficient   Advanced 
+##        315       3034      20770      25846
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">table(yourData$rlaprogram)
+</code></pre>
+
+<pre><code>## 
+## Did not participate in RLA Intervention 
+##                                   30389 
+##        Participated in RLA Intervention 
+##                                   23241
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Proportions</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">prop.table(table(yourData$ed))
+</code></pre>
+
+<pre><code>## 
+## Not Economically Disadvantaged     Economically Disadvantaged 
+##                           0.35                           0.65
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">prop.table(table(yourData$pgrmthlev))
+</code></pre>
+
+<pre><code>## 
+##    Minimal      Basic Proficient   Advanced 
+##     0.1515     0.2174     0.4362     0.1948
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">prop.table(table(yourData$mthprogram))
+</code></pre>
+
+<pre><code>## 
+## Did not participate in Math Intervention 
+##                                   0.6422 
+##        Participated in Math Intervention 
+##                                   0.3578
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Percentages</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">prop.table(table(yourData$scd)) * 100
+</code></pre>
+
+<pre><code>## 
+## Non-Severe Cognitive Disability Student 
+##                                  97.999 
+##   Student w/Severe Cognitive Disability 
+##                                   2.001
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">prop.table(table(yourData$female)) * 100
+</code></pre>
+
+<pre><code>## 
+##   Male Female 
+##     51     49
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>You can round the values too</li>
+</ul>
+
+<pre><code class="r"># Put parentheses around everything before the comma to make sure it is
+# evaluated first The number after the comma is how many digits past the
+# decimal you&#39;ll get back
+round((prop.table(table(yourData$mthprogram)) * 100), 1)
+</code></pre>
+
+<pre><code>## 
+## Did not participate in Math Intervention 
+##                                     64.2 
+##        Participated in Math Intervention 
+##                                     35.8
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Cross-Tabulations of frequencies</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Same as regular frequencies but separate the two variables with a comma
+table(yourData$female, yourData$ed)
+</code></pre>
+
+<pre><code>##         
+##          Not Economically Disadvantaged Economically Disadvantaged
+##   Male                             9678                      17673
+##   Female                           9092                      17187
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Cross-Tabulations of proportions</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Same as regular proportions but separate the two variables with a comma
+prop.table(table(yourData$female, yourData$ed))
+</code></pre>
+
+<pre><code>##         
+##          Not Economically Disadvantaged Economically Disadvantaged
+##   Male                           0.1805                     0.3295
+##   Female                         0.1695                     0.3205
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Cross-Tabulations of percentages</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Same as regular proportions but separate the two variables with a comma
+prop.table(table(yourData$female, yourData$ed)) * 100
+</code></pre>
+
+<pre><code>##         
+##          Not Economically Disadvantaged Economically Disadvantaged
+##   Male                            18.05                      32.95
+##   Female                          16.95                      32.05
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Finding the number of unique categories</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Find the number of unique districts and schools
+length(unique(yourData$distid))
+</code></pre>
+
+<pre><code>## [1] 25
+</code></pre>
+
+<pre><code class="r">length(unique(yourData$schid))
+</code></pre>
+
+<pre><code>## [1] 182
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Describing Intervallic/Ratio Scale Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Location</h3>
+
+<ul>
+<li>The mean and the average are the same</li>
+<li>The median is the value in the middle of the range of all the values (e.g., 50%)</li>
+<li>The maximum and minimum are the lowest and highest observed values</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h3>Deviance/Variance</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Variance and Standard Deviation describe how far values are spread from the mean - on average</li>
+<li>The interquartile range is like taking the median from the minimum to median values (e.g., 25%) and the median to maximum values (e.g., 75%)</li>
+<li>The standard deviation is the squared root of the variance; the Variance is the standard deviation squared; this tells you how far the values spread (on average) from the mean</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h3>High Order Moment Conditions</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Skewness indicates whether one tail of the distribution is longer than the other (e.g., whether or not the distribution is symmetrical)</li>
+<li>Kurtosis indicates whether or not the middle of the distribution is too flat or too sharp (e.g., too few observations in the middle or too many observations in the middle of the distribution)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Location</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># The argument after the variable name means to exclude NA (not applicable)
+# values
+mean(yourData$cgrmthscore, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 165.1
+</code></pre>
+
+<pre><code class="r"># Store the value of the mean to use it in a graph on the next slide
+vertical &lt;- mean(yourData$cgrmthscore, na.rm = TRUE)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># You can add it to a graph too (for a vertical line you need to use xintercept)
+ggplot(yourData, aes(x = cgrmthscore)) + geom_histogram() + # 
+    geom_vline(xintercept = vertical, color = &quot;red&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-16.png" alt="plot of chunk unnamed-chunk-16"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># What happens if there are NA values and you don&#39;t use na.rm = TRUE?
+someValues &lt;- c(1, 3, 4, 9, 17, NA, 4, 4, 6)
+mean(someValues)
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r">mean(someValues, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 6
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># What happens if you try to calculate the mean of a nominal scale variable?
+mean(yourData$race)
+</code></pre>
+
+<pre><code>## Warning: argument is not numeric or logical: returning NA
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Get the median - or 50th percentile - of a variable
+median(yourData$pgrmthscore, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 154
+</code></pre>
+
+<pre><code class="r"># You can also add the median value to a plot by storing it as well
+vertical &lt;- median(yourData$pgrmthscore, na.rm = TRUE)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Using a different color and size you can make things easier to see
+ggplot(yourData, aes(x = pgrmthscore)) + geom_histogram() + # 
+    geom_vline(xintercept = vertical, size = 2, color = &quot;red&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-20.png" alt="plot of chunk unnamed-chunk-20"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Get the median, interquartile range, and the minimum/maximum values
+fivenum(yourData$cgrrlascore, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 122.4 158.3 165.6 172.8 215.0
+</code></pre>
+
+<pre><code class="r"># If you wanted to see where all of these values are located you can do that
+# too
+multipleLines &lt;- fivenum(yourData$cgrrlascore, na.rm = TRUE)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Graph the distribution with Tukey&#39;s Five Number Summary
+ggplot(yourData, aes(x = cgrrlascore)) + geom_histogram() + # 
+    geom_vline(xintercept = multipleLines, size = 2, color = &quot;orange&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-22.png" alt="plot of chunk unnamed-chunk-22"> </p>
+
+<h2>Deviance/Variance</h2>
+
+<pre><code class="r"># Get the standard deviation of a variable
+sd(yourData$pgrrlascore, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 12.07
+</code></pre>
+
+<pre><code class="r"># Store the standard deviation &amp; the mean for the next graph
+sds &lt;- sd(yourData$pgrrlascore, na.rm = TRUE)
+center &lt;- mean(yourData$pgrrlascore, na.rm = TRUE)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Show 1 standard deviation around the mean
+ggplot(yourData, aes(x = pgrrlascore)) + geom_density() + #
+geom_vline(xintercept = center - sds) + geom_vline(xintercept = center + sds)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-24.png" alt="plot of chunk unnamed-chunk-24"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Get the variance of a variable
+sd(yourData$pgrmthscore, na.rm = TRUE)^2
+</code></pre>
+
+<pre><code>## [1] 142.8
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Higher order moments</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># If you don&#39;t have it already, install the moments package and load it
+install.packages(&quot;moments&quot;, dep = TRUE)
+</code></pre>
+
+<pre><code>## Error: trying to use CRAN without setting a mirror
+</code></pre>
+
+<pre><code class="r">library(&quot;moments&quot;)
+
+# Get the skewness of a variable
+skewness(yourData$pgrmthscore, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 0.006127
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Skewness</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>This tells you how assymetrical a distribution is (e.g., are the tails of the distribution the same length and density on both sides of the mean)</li>
+<li>When data are skewed there are typically a handful of observations that are far from the mean (think of comparing the average American net wealth to the net weath of Carlos Slim and/or Bill Gates)</li>
+<li>If the data are highly skewed, it will affect the mean, but may not have much of an effect on the median</li>
+<li>Because deviance/variance is a function of the mean, it will also affect these values as well</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Get the kurtosis of a variable
+kurtosis(yourData$pgrmthscore, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 2.985
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Kurtosis</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>While skewness indicates if the tails aren&#39;t the same length on both sides, kurtosis tells you how fat the tails of the distribution are.<br></li>
+<li>If the tails are too thin, your density plot will look like a spike</li>
+<li>If the tails are too fat, your density plot will look like someone flattened the middle of the curve</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h2>Next Class</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Next class we&#39;ll start looking at some different packages that can help you aggregate and disaggregate data
+
+<ul>
+<li>Creating school/district level summaries</li>
+<li>Creating summaries for subpopulations within the schools/districts</li>
+</ul></li>
+<li>You need to be very comfortable with the commands from tonight in order to test assumptions for t-tests and correlations<br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Loading Data into R'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Describing Nominal/Ordinal Scale Data'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Frequencies'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title=''>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Proportions'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title=''>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Percentages'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title=''>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title=''>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Cross-Tabulations of frequencies'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Cross-Tabulations of proportions'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Cross-Tabulations of percentages'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Finding the number of unique categories'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Describing Intervallic/Ratio Scale Data'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Deviance/Variance'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='High Order Moment Conditions'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Location'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title=''>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title=''>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title=''>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title=''>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title=''>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title=''>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title=''>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title=''>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title=''>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Higher order moments'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Skewness'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title=''>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Kurtosis'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Next Class'>
+         35
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
