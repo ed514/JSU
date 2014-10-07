@@ -1,0 +1,330 @@
+---
+title       : "Descriptive Statistics:"
+subtitle    : "Measures of Central Tendency and Summarizing Data"
+author      : "William R. Buchanan, Ph.D." 
+job         : "Strategic Data Fellow at MDE/Adjunct Prof at JSU"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+
+---
+`r opts_chunk$set(message = FALSE)`
+
+## Overview 
+* Review:
+    + Syllabus
+* Describing Nominal/Ordinal Scale Data 
+    + Frequencies
+    + Proportions
+    + Percentages
+    + Cross tabulations
+    + Finding the number of unique categories
+* Describing Intervallic/Ratio Scale Data
+    + Location
+    + Deviance/Variance
+    + Higher order parameters
+* Next Class
+
+---
+
+## Review
+* The lecture tonight is fairly compact, so I'll provide some time a bit later for you to ask some last minute questions related to the syntax
+* Keep practicing the skills required to create graphs because you'll need to use it later in the semester
+
+---   
+
+## Loading Data into R
+*If you need additional help for the next set of commands you can use `?table`, `?prop.table`, and `?round` to see the help files for each of these commands.
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE, cache = FALSE}
+library("foreign"); library("ggplot2")
+
+# Load some data for the examples
+yourData <- as.data.frame(read.dta(#
+    "http://www.paces-consulting.org/stata/JSU/Fall2014/JohnDoe-task1.dta"))
+```
+
+---   
+
+# Describing Nominal/Ordinal Scale Data
+* Frequencies tell you the number of observations per category
+* You can use the terms proportions and percentages interchangably when describing categorical data since you can only have up to 100% 
+* Proportions tell you the ratio of the number of observations in that category compared to all observations
+* The marginal proportions give you the proportions for based on the total number of observations per row/column in a cross tabulation
+* Sometimes you'll also want to know the number of unique categories
+
+---
+
+## Frequencies
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+table(yourData$race)
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+table(yourData$cgrrlalev)
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+table(yourData$rlaprogram)
+```
+
+---   
+
+## Proportions
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+prop.table(table(yourData$ed))
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+prop.table(table(yourData$pgrmthlev))
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+prop.table(table(yourData$mthprogram))
+```
+
+---
+
+## Percentages
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+prop.table(table(yourData$scd)) * 100
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+prop.table(table(yourData$female)) * 100
+```
+
+---   
+
+* You can round the values too
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Put parentheses around everything before the comma to make sure it is evaluated first
+# The number after the comma is how many digits past the decimal you'll get back
+round((prop.table(table(yourData$mthprogram)) * 100), 1)
+```
+
+---
+
+## Cross-Tabulations of frequencies
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Same as regular frequencies but separate the two variables with a comma
+table(yourData$female, yourData$ed)
+```
+
+---   
+
+## Cross-Tabulations of proportions
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Same as regular proportions but separate the two variables with a comma
+prop.table(table(yourData$female, yourData$ed))
+```
+
+---    
+
+## Cross-Tabulations of percentages
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Same as regular proportions but separate the two variables with a comma
+prop.table(table(yourData$female, yourData$ed)) * 100
+```
+
+---  
+
+## Finding the number of unique categories
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Find the number of unique districts and schools
+length(unique(yourData$distid)); length(unique(yourData$schid))
+```
+
+---
+
+## Describing Intervallic/Ratio Scale Data
+### Location
+* The mean and the average are the same
+* The median is the value in the middle of the range of all the values (e.g., 50%)
+* The maximum and minimum are the lowest and highest observed values
+
+---   
+
+### Deviance/Variance
+* Variance and Standard Deviation describe how far values are spread from the mean - on average
+* The interquartile range is like taking the median from the minimum to median values (e.g., 25%) and the median to maximum values (e.g., 75%)
+* The standard deviation is the squared root of the variance; the Variance is the standard deviation squared; this tells you how far the values spread (on average) from the mean
+
+---   
+
+### High Order Moment Conditions
+
+* Skewness indicates whether one tail of the distribution is longer than the other (e.g., whether or not the distribution is symmetrical)
+* Kurtosis indicates whether or not the middle of the distribution is too flat or too sharp (e.g., too few observations in the middle or too many observations in the middle of the distribution)
+
+---
+
+## Location
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# The argument after the variable name means to exclude NA (not applicable) values
+mean(yourData$cgrmthscore, na.rm = TRUE)
+
+# Store the value of the mean to use it in a graph on the next slide
+vertical <- mean(yourData$cgrmthscore, na.rm = TRUE)
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# You can add it to a graph too (for a vertical line you need to use xintercept)
+ggplot(yourData, aes(x = cgrmthscore)) + geom_histogram() + # 
+    geom_vline(xintercept = vertical, color = "red")
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# What happens if there are NA values and you don't use na.rm = TRUE?
+someValues <- c(1, 3, 4, 9, 17, NA, 4, 4, 6)
+mean(someValues)
+mean(someValues, na.rm = TRUE)
+```
+
+---
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# What happens if you try to calculate the mean of a nominal scale variable?
+mean(yourData$race)
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Get the median - or 50th percentile - of a variable
+median(yourData$pgrmthscore, na.rm = TRUE)
+
+# You can also add the median value to a plot by storing it as well
+vertical <- median(yourData$pgrmthscore, na.rm = TRUE)
+```
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Using a different color and size you can make things easier to see
+ggplot(yourData, aes(x = pgrmthscore)) + geom_histogram() + # 
+    geom_vline(xintercept = vertical, size = 2, color = "red")
+```
+
+---
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Get the median, interquartile range, and the minimum/maximum values
+fivenum(yourData$cgrrlascore, na.rm = TRUE)
+
+# If you wanted to see where all of these values are located you can do that too
+multipleLines <- fivenum(yourData$cgrrlascore, na.rm = TRUE)
+```
+
+---
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Graph the distribution with Tukey's Five Number Summary
+ggplot(yourData, aes(x = cgrrlascore)) + geom_histogram() + # 
+    geom_vline(xintercept = multipleLines, size = 2, color = "orange")
+```
+
+## Deviance/Variance
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Get the standard deviation of a variable
+sd(yourData$pgrrlascore, na.rm = TRUE)
+
+# Store the standard deviation & the mean for the next graph
+sds <- sd(yourData$pgrrlascore, na.rm = TRUE)
+center <- mean(yourData$pgrrlascore, na.rm = TRUE)
+```
+
+--- 
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Show 1 standard deviation around the mean
+ggplot(yourData, aes(x = pgrrlascore)) + geom_density() + #
+geom_vline(xintercept = center - sds) + geom_vline(xintercept = center + sds)
+```
+
+---
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Get the variance of a variable
+sd(yourData$pgrmthscore, na.rm = TRUE)^2
+```
+
+--- 
+
+## Higher order moments
+```{r, eval = TRUE, echo = TRUE, cache = FALSE, tidy = TRUE, warning = FALSE, error = FALSE}
+# If you don't have it already, install the moments package and load it
+install.packages("moments", dep = TRUE); library("moments")
+
+# Get the skewness of a variable
+skewness(yourData$pgrmthscore, na.rm = TRUE)
+```
+
+---   
+
+## Skewness
+* This tells you how assymetrical a distribution is (e.g., are the tails of the distribution the same length and density on both sides of the mean)
+* When data are skewed there are typically a handful of observations that are far from the mean (think of comparing the average American net wealth to the net weath of Carlos Slim and/or Bill Gates)
+* If the data are highly skewed, it will affect the mean, but may not have much of an effect on the median
+* Because deviance/variance is a function of the mean, it will also affect these values as well
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE, tidy = TRUE, warning = TRUE}
+# Get the kurtosis of a variable
+kurtosis(yourData$pgrmthscore, na.rm = TRUE)
+```
+
+---
+
+## Kurtosis
+* While skewness indicates if the tails aren't the same length on both sides, kurtosis tells you how fat the tails of the distribution are.  
+* If the tails are too thin, your density plot will look like a spike
+* If the tails are too fat, your density plot will look like someone flattened the middle of the curve
+
+---   
+
+## Next Class
+* Next class we'll start looking at some different packages that can help you aggregate and disaggregate data
+    + Creating school/district level summaries
+    + Creating summaries for subpopulations within the schools/districts
+* You need to be very comfortable with the commands from tonight in order to test assumptions for t-tests and correlations    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
