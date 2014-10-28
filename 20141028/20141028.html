@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inferential Statistics:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Inferential Statistics:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Inferential Statistics:</h1>
+    <h2>Sources of Error, Model Assumptions, and Independent Samples t-Tests</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review</li>
+<li>Sources of error 
+
+<ul>
+<li>Sample statistics and population parameters</li>
+<li>Measurement</li>
+</ul></li>
+<li>Model Assumptions
+
+<ul>
+<li>Equal variance, Independence</li>
+<li>Measurement Scale, Distribution of the Outcome</li>
+</ul></li>
+<li>Independent Samples t-Tests
+
+<ul>
+<li>What is the null-hypothesis and how do you &quot;test&quot; a hypothesis?</li>
+<li>What is a t-Test?, When to use a t-test?</li>
+<li>Examples</li>
+</ul></li>
+<li>Next Class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Explain in your own words, what <code>dplyr</code> is and what it is used for?</li>
+<li>What are some of the <code>dplyr</code> functions that you can use to aggregate/disaggregate data?</li>
+<li>How many people submitted their work from last week?<br></li>
+<li>If you didn&#39;t turn in anything last week, and you haven&#39;t been participating in the
+discussion boards regularly, you <strong>will</strong> make it much more difficult on <em>yourself</em> 
+to earn a <strong>B</strong>.<br></li>
+<li>If you want to make sure that you&#39;re able to <em>earn</em> a decent grade and you 
+<em>haven&#39;t</em> participated on the discussion boards regularly, you <strong>need</strong> to 
+participate on the discussion boards <strong>EVERY WEEK</strong> from this point forward 
+<strong>without exception</strong>.<br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Load the foreign data package and the ggplot2 package
+library(&quot;foreign&quot;); library(&quot;ggplot2&quot;)
+
+# Store the URL where the data can be accessed
+url &lt;- &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/&quot;
+
+# Load either your data or the example data (Substitute your name to get your data)
+example &lt;- as.data.frame(read.dta(paste0(url, &quot;JohnDoe-task3.dta&quot;)))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Sources of error : Sample Statistics vs Population Parameters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Sample statistics are used to <strong>describe</strong> the data that you collected or that 
+appear in your datasets</li>
+<li>Population parameters are <strong>estimates</strong> of what we think the true value is in 
+the population</li>
+<li>When you want to use statistics to generalize findings beyond the data you 
+have on hand, you are making an <strong>inference</strong> that should be based on your 
+estimates of the population parameters</li>
+<li>When you only have a sample, your data can contain <em>random sampling error</em> or 
+<em>non-random sampling error</em>.<br></li>
+<li>If your sample was selected completely at random, it will generally be pretty 
+close to the true value in the population</li>
+<li>If your sample was not selected completely at random, it is less likely to be 
+close to the true value in the population</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Sources of error : Measurement</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>One major source of error that we deal with in education on a regular basis is 
+measurement error</li>
+<li>If we were measuring something simple, like the height of students, how likely 
+do you think it would be that we would all get exactly the same answer?<br></li>
+<li>What are some reasons that the measurements would not be identical?</li>
+<li>Now, imagine how much more difficult it is when you are trying to measure 
+something that doesn&#39;t exist in the physical world, like reading/math
+proficiency.</li>
+<li>What would happen if the tests that each district used had different levels of 
+difficulty?  Could you compare those results accurately/reliably? Why/Why not?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>You can think about measurement error as:
+
+<ul>
+<li>error attributed to a lack of calibration in measurement methods (e.g., 
+everyone tells students to stand different when measuring height, some people
+use a tape measure while others use a yard stick, etc...)</li>
+<li>error attributed to a lack of calibration of measurement tools (e.g., 
+everyone uses a different yard stick, but no one checks to make sure the 
+marks occur at the same place)</li>
+<li>error attributed to a lack of precision (e.g., measuring the length of a 
+football field with a 12&quot; ruler would not be likely to give the same result
+from using land surveying tools)</li>
+<li>error attributed to a lack of reliability (e.g., if you took the exact 
+same measurement 5 minutes later the result would not be the same)</li>
+</ul></li>
+<li>These are all things that <strong>need</strong> to be considered when analyzing data</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Model Assumptions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Model assumptions are things that you are willing to <em>assume are true</em> about 
+your data, parameters, and model in order to obtain valid results</li>
+<li>Many times, these assumptions are violated, in which case we need to find ways 
+to work around them
+
+<ul>
+<li>For example, almost all statistical methods assume the data come from a 
+random sample, but in the field of education, we rarely - if ever - work 
+with a random sample of data</li>
+</ul></li>
+<li>For t-Tests there are two related assumptions that you need to consider: 
+1.) Equality of variance; &amp; 2.) </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Equality of Variance</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A t-Test expects that the <em>variances</em> - or the average amount the data are 
+spread from the mean - will be equal across both groups</li>
+<li>The few different statistical procedures that exist to test this assumption 
+generally perform poorly unless you have unreasonably large group sizes</li>
+<li>R uses a correction (Welch&#39;s t-Test) to deal with cases where this assumption 
+is violated</li>
+<li>Other software will sometimes use alternative methods to deal with the same 
+issue, in particular the Saterthwaite correction is fairly common as well</li>
+<li>So, how would you know whether or not the assumption is true or might be true?<br></li>
+<li>Although it&#39;s not the most &quot;scientific&quot;, one way to get some idea of whether 
+or not the assumption holds is to graph the distribution(s) of the data for the 
+groups</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a graph of the distributions
+ggplot(data = example, aes(x = mthscore2)) + #
+geom_density(mapping = aes(fill = mthprogram), alpha=I(.75)) 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Independance</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Although the graph on the previous slide shows the distribution of scores from 
+distinct groups, are students in the same classrooms, same schools, and same 
+districts really independent of one another?</li>
+<li>Ideally, the two groups would be defined by randomly assigning students to one 
+group or the other, but that is extremely rare in education</li>
+<li>In general, this means that your <em>standard errors</em> - or your <strong>margin of error</strong> - 
+will not be completely accurate (e.g., it will generally be too large if the 
+observations are clustered or grouped)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h1>Outcome scale &amp; Distribution of the outcome</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>For t-Tests, your outcome should be an intervallic or ratio scale variable</li>
+<li>In other words, you wouldn&#39;t use a t-Test for proficiency levels, or nominal 
+scale variables like race, because there wouldn&#39;t be any way to interpret the <em>mean</em></li>
+<li>If you graphed the data above using your own data, you would be able to see
+how normal/non-normal things are</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>Some additional strategies that you could/should use to determine whether the 
+data are normally - or Gaussian - distributed is to estimate the skewness and 
+kurtosis for your outcome</li>
+</ul>
+
+<pre><code class="r"># Load the moments package to get skewness and kurtosis functions
+library(&quot;moments&quot;)
+
+# Get the skewness and kurtosis
+skewness(example$mthscore2, na.rm = TRUE) 
+</code></pre>
+
+<pre><code>## [1] 0.02287
+</code></pre>
+
+<pre><code class="r">kurtosis(example$mthscore2, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 3.059
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Independent Samples t-Tests</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Independent Samples t-Tests are used to test whether the <strong>means</strong> of <strong>TWO</strong> 
+groups are statistically different from 0 (or no difference)</li>
+<li>It is a method typically used in experimental designs where participants can 
+be randomly assigned to a treatment or controll group</li>
+<li>Using it in a non-random context, it would not be a good idea to discuss any 
+type of <em>causal</em> effect; Instead, you could treat it like a way of describing 
+the differences that you observe in the data and/or that may exist in the population</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h1>What is the null-hypothesis and how do you &quot;test&quot; a hypothesis?</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A hypothesis is a statement that can be answered with a true/false response
+
+<ul>
+<li>Males score higher, on average, than females on the math assessment in grade 3</li>
+<li>Students participating in the Reading intervention scored higher - on average - compared to students who did not participate in the intervention</li>
+</ul></li>
+<li>The null-hypothesis is the negative form of your hypothesis:
+
+<ul>
+<li>Males <strong>do not</strong> score higher than females on the 3rd grade math assessment on average</li>
+<li>There is <strong>no difference</strong> in reading scores between students who did/did not participate in the reading intervention</li>
+</ul></li>
+<li>For cases like this, your hypothesis can be tested using a t-test, although other hypotheses may require different techniques/algorithms</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>What is a t-Test?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The t-test is a comparison of the difference of the means of <strong>TWO GROUPS</strong> </li>
+<li>It requires <strong>ONE CONTINUOUS</strong> scale outcome and <strong>ONE NOMINAL</strong> scale indicator for the <strong>TWO GROUPS</strong></li>
+<li>The purpose is to quantify whether or not the difference exists purely by chance </li>
+<li>The probability of occuring by chance is represented as a <em>p-value</em>
+
+<ul>
+<li>values &lt; 0.05 mean the difference would occur less than 5% of the time by chance alone</li>
+<li>values &gt; 0.05 mean the difference would occur by chance more than 5% of the time</li>
+</ul></li>
+<li>This can be helpful to identify whether or not a difference is statistically meaningful, but whether or not the difference is practically meaningful should come from your experience/research literature </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>When to use a t-test?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The t-Test should only be used when you have <strong>exactly TWO GROUPS</strong> to compare</li>
+<li>If you have 3 or more groups to compare, <strong>DO NOT USE A t-TEST</strong></li>
+<li>Use a t-test if you want to get a better understanding of whether or not differences are likely to be completely random in nature vs the result of some non-random phenomena</li>
+<li>Use a t-Test when you want to make statements about the <em>population</em> based on your <em>sample</em> of data</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Examples</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Test first hypothesis example
+t.test(mthscore2 ~ sex, data = example, subset = currentGrade == 3, na.action = na.omit)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  mthscore2 by sex
+## t = 7.7, df = 21234, p-value = 1.417e-14
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.9855 1.6585
+## sample estimates:
+##   mean in group Male mean in group Female 
+##                162.6                161.3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Test second hypothesis example
+t.test(rlascore2 ~ rlaprogram, data = example, na.action = na.omit)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  rlascore2 by rlaprogram
+## t = 188.3, df = 113756, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  11.61 11.86
+## sample estimates:
+## mean in group Did not participate in RLA Intervention 
+##                                                 162.8 
+##        mean in group Participated in RLA Intervention 
+##                                                 151.1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Next Class</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Paired, or dependent, Samples t-Tests</li>
+<li>You will get some time to finish Task III next class, but you should have the majority finished</li>
+<li>The data you have now is beginning to look slightly more realistic.  This means you will have missing data, so it is up to you to review examples where I&#39;ve shown how to remove missing values in your calculations</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Sources of error : Sample Statistics vs Population Parameters'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Sources of error : Measurement'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Model Assumptions'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Equality of Variance'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Independance'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Outcome scale &amp; Distribution of the outcome'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title=''>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Independent Samples t-Tests'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='What is the null-hypothesis and how do you &quot;test&quot; a hypothesis?'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='What is a t-Test?'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='When to use a t-test?'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Examples'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title=''>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Next Class'>
+         19
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
