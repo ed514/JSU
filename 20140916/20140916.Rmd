@@ -92,8 +92,13 @@ knit        : slidify::knit2slides
 
 ## Additional Resources
 ```{r, eval = FALSE, echo = TRUE, cache = TRUE, tidy = TRUE}
-# Load the function that you'll need
-source("https://github.com/ed514/JSU/blob/master/20140916/getRGraphicsExamples.R")
+# Loading source directly from GitHub is not quite so easy.  
+# So, we'll download the file first
+download.file("https://github.com/ed514/JSU/blob/master/20140916/getRGraphicsExamples.R", 
+              "getRGraphicsExamples.R", method = "curl")
+
+# Then we can load the function
+source("getRGraphicsExamples.R")
 
 # If you just want to download the examples so you can look at them in the moment use
 getRGraphicsExamples(out = 0)
