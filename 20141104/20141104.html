@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inferential Statistics:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Inferential Statistics:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Inferential Statistics:</h1>
+    <h2>Dependent Samples t-Tests</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review</li>
+<li>R stuff</li>
+<li>Model Assumptions
+
+<ul>
+<li>Same subjects</li>
+<li>Distribution of the Outcome</li>
+</ul></li>
+<li>Dependent Samples t-Tests
+
+<ul>
+<li>Choosing between dependent and independent samples t-tests</li>
+<li>Examples</li>
+</ul></li>
+<li>Next Class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How many groups of subjects (students) can you compare when using an independent samples t-test?</li>
+<li>What does the p-value from a t-test indicate?</li>
+<li>Explain the 95% Confidence Interval in your own words.</li>
+<li>Are statistically significant differences <strong>always</strong> practically significant?  Give an example to support your answer</li>
+<li>Give an example of a hypothesis that you could test using a t-test.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Load the foreign data package and the ggplot2 package
+library(&quot;foreign&quot;); library(&quot;ggplot2&quot;)
+
+# Store the URL where the data can be accessed
+url &lt;- &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/&quot;
+
+# Load either your data or the example data (Substitute your name to get your data)
+example &lt;- as.data.frame(read.dta(paste0(url, &quot;JohnDoe-task3.dta&quot;)))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>R Stuff</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>As you&#39;ll see soon enough, dependent samples t-tests do things a bit differently than
+independent samples t-tests, and in order to fully appreciate the assumptions, we need to 
+be able to do a bit of data manipulation</li>
+<li>You&#39;ve done basic arithmetic in R during the DataCamp assignment, and now we&#39;re going to 
+compare that with a little bit of data management to help you look at/assess the assumptions 
+of the model you&#39;ll end up fitting to your data</li>
+<li>Remember that you can refer to a variable in a dataframe using these types of references
+
+<ul>
+<li><code>example$mthscore2</code></li>
+<li><code>example[&quot;rlascore1&quot;]</code></li>
+<li><code>example[, 14]</code></li>
+</ul></li>
+<li>In the first example <code>example</code> is the name of your data object, <code>$</code> is a symbol used to reference a column within that data object, and <code>mthscore2</code> is the name of the variable you&#39;re interested in</li>
+<li>In the second example <code>example</code> is still the name of your data object and <code>[&quot;rlascore1&quot;]</code> is the name of the variable you&#39;re interested in</li>
+<li>In the last example, <code>example</code> is still the name of your data object and <code>[, 14]</code> is the position - or column number - for the variable you are interested in</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>You should remember that you can use objects for basic arithmetic:
+
+<ul>
+<li><code>x &lt;- 5; y &lt;- 3; x - y</code> (you should see <code>[1] 2</code> if you do that in R)</li>
+</ul></li>
+<li>You should also remember from the graph examples that you can <em>recursively</em> create objects
+
+<ul>
+<li>In this context, remember the cases in the examples/class where we assigned a result to an 
+object that included itself like <code>x &lt;- 5; x &lt;- x - 3</code></li>
+</ul></li>
+<li>We can combine those ideas to create new variables that contain results like this as well</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a new variable containing the difference between math scores
+example$mthdiff &lt;- example$mthscore2 - example$mthscore1
+
+# Create a new variable containing the difference between reading scores
+example$rladiff &lt;- example$rlascore2 - example$rlascore1
+
+# Look at summaries of these variables
+summary(example[c(&quot;rladiff&quot;, &quot;mthdiff&quot;)])
+</code></pre>
+
+<pre><code>##     rladiff         mthdiff     
+##  Min.   :-35     Min.   :-3     
+##  1st Qu.:  0     1st Qu.: 6     
+##  Median :  6     Median : 8     
+##  Mean   :  7     Mean   : 8     
+##  3rd Qu.: 13     3rd Qu.:11     
+##  Max.   : 50     Max.   :22     
+##  NA&#39;s   :20743   NA&#39;s   :12808
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h1>Distribution of the outcome</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The data must still be measured on the intervallic/ratio scale</li>
+<li>The difference between <strong>independent</strong> and <strong>dependent</strong> t-tests assumptions is :
+
+<ul>
+<li>Independent samples t-tests assume the distribution of the <em>outcome variable</em> is approximately 
+Gaussian (normal; looks like a bell curve)</li>
+<li>Dependent samples t-tests assume that the <strong>difference</strong> between the two measures being 
+compared are approximately Gaussian (normal; looks like a bell curve)</li>
+</ul></li>
+<li>The way that you can assess this, is by doing what we did above (e.g., creating a new variable with 
+the difference between the two meausres) and graphing that distribution</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a graph of the distribution of the difference in the scores
+ggplot(data = example, aes(x = mthdiff)) + geom_density() + #
+ggtitle(&quot;Distribution of the Difference in Math Scores: \nPrior vs Current Year&quot;) + #
+xlab(&quot;Difference Score&quot;) + ylab(&quot;Density of Observations&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a graph of the distribution of the difference in the scores
+ggplot(data = example, aes(x = rladiff)) + geom_density() + #
+ggtitle(&quot;Distribution of the Difference in Reading Scores: \nPrior vs Current Year&quot;) + #
+xlab(&quot;Difference Score&quot;) + ylab(&quot;Density of Observations&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Same Subjects</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>For <strong>independent</strong> samples t-tests the students can only appear in one group or the other</li>
+<li>For <strong>dependent</strong> samples t-tests you are comparing the students to themselves across two measures</li>
+<li>So for a <strong>dependent</strong> or <strong>paired</strong> samples t-test, there is no grouping variable because you are 
+comparing the difference in the means of the same students (e.g., comparing how students in your 
+class did on test 1 with how they did on test 2)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Dependent Samples t-Tests</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Last week, when we discussed independent samples t-tests, the discussion focused on two distinct 
+groups of subjects (students in our example data) that did not overlap (e.g., a student could only 
+belong to a single group)
+
+<ul>
+<li><em>independent samples</em> is actually telling us that the two groups should be mutually exclusive
+(e.g., cannot belong to both groups) and should be independent of one another (e.g., you 
+wouldn&#39;t compare a subset of a group with the group as a whole [e.g., you wouldn&#39;t compare the
+mean of Hispanic/Latino males to the mean of all Hispanics/Latinos])</li>
+</ul></li>
+<li><strong>Dependent samples</strong> or <strong>paired samples</strong> t-tests have a very different assumption about the 
+subjects, which is that you are comparing the same subjects across two measures (e.g., comparing 
+the students&#39; scores from last year with the current year)
+
+<ul>
+<li><em>dependent</em> or <em>paired</em> samples implies that the measures are paired by subjected (e.g., the
+outcome variables are each paired with the same student) and/or that the measures are dependent 
+on time (e.g., the same measurement is used at time 1 and time2)</li>
+<li>This may sound like there isn&#39;t a difference, but <em>paired</em> implied that you can test the 
+difference in the means of reading and math tests for the same students (e.g., see if there is 
+a difference in the means of the two scores)</li>
+</ul></li>
+<li>Give an example of when you may want to use a dependent/paired samples t-test</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Choosing between dependent and independent samples t-tests?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>If you are interested in comparing two distinct groups of observations use the <strong>independent</strong> 
+samples t-test
+
+<ul>
+<li>You want to compare the scores of students getting free lunch vs students not getting free 
+lucn on the same test</li>
+<li>You want to compare the heights of boys vs girls</li>
+</ul></li>
+<li>If you are interested in comparing the same students over time, or the same students on two 
+different measures, use a <strong>dependent</strong> samples t-test
+
+<ul>
+<li>You want to compare whether there is a difference in reading and math scores for the students
+in your classroom</li>
+<li>You want to compare whether or not the difference between student scores on the first 9-week 
+exam is different from their scores on the second 9-week exam (e.g., did the scores go up down 
+or stay the same on average)</li>
+</ul></li>
+<li>Remember that although it is possible to do some of these things, it may not make practical or 
+theorical sense to do so</li>
+<li>When deciding if you should/shouldn&#39;t do something for a t-test ask yourself if it is something 
+that you think would be helpful to you and/or your colleagues to know about the student outcomes</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Examples</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Test first hypothesis example
+t.test(mthscore2, mthscore1, paired = TRUE)
+</code></pre>
+
+<pre><code>## Error: object &#39;mthscore2&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Next Class</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Simple correlations </li>
+<li>Use the task3 dataset for the task4 assignment</li>
+<li>There may be a new data set for the final so be sure that you are comfortable finding out how to 
+label your graphs using information from the dataset (in previous weeks&#39; slides) and are comfortable 
+substituting different variables into the examples</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='R Stuff'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title=''>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Distribution of the outcome'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title=''>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Same Subjects'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Dependent Samples t-Tests'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Choosing between dependent and independent samples t-tests?'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Examples'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Next Class'>
+         14
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
