@@ -170,7 +170,7 @@ that you think would be helpful to you and/or your colleagues to know about the 
 ## Examples
 ```{r, echo = TRUE, eval = TRUE, tidy = TRUE}
 # Test first hypothesis example
-t.test(mthscore2, mthscore1, paired = TRUE)
+t.test(example$mthscore2, example$mthscore1, paired = TRUE)
 ```
 
 ---   
