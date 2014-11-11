@@ -1,0 +1,171 @@
+---
+title       : "Inferential Statistics:"
+subtitle    : "Correlation"
+author      : "William R. Buchanan, Ph.D." 
+job         : "Strategic Data Fellow at MDE/Adjunct Prof at JSU"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+
+---
+`r opts_chunk$set(message = FALSE)`
+
+## Overview 
+* Announcements
+* Review
+* What are correlations?
+	+ What do correlations quantify?
+	+ What types of variables can you use for correlations?
+  + Are correlations the same as causes?
+* Illustrating correlations
+     + A review of EDA for two or more variables
+     + A reminder to use the linear smoother
+* Assumptions of simple correlations
+* Next Class
+
+---   
+
+## Announcements
+* The task 3 resubmission is due by __this friday at midnight__. 
+* I can't tell if blackboard will allow you to resubmit or not, but if you have difficulties resubmitting, email the file with your code to me using the email address in the syllabus
+* If you do not email your work to me, I will assume that what is in blackboard is your submission
+* __READ THE SYLLABUS__ - many of you are throwing away points by not following the directions listed in the syllabus
+
+---
+
+## Review
+* Give an example of when you would use an independent vs a dependent samples t-test.
+* When would it make sense to use a dependent samples t-test?
+* Given an example of a hypothesis that you would test with a dependent samples t-test.
+* List some of the assumptions of a t-test and how you would check the assumptions
+* Do the dependent and independent samples t-tests have exactly the same assumptions?  Explain your answer.
+
+
+---   
+
+```{r, eval = TRUE, echo = TRUE, cache = TRUE}
+# Install these packages if you haven't done so already
+# install.packages("Hmisc", dep = TRUE); install.packages("psych", dep = TRUE)
+
+# Load the foreign data package and the ggplot2 package
+library("foreign"); library("ggplot2"); library("Hmisc"); library("psych")
+
+# Store the URL where the data can be accessed
+url <- "http://www.paces-consulting.org/stata/JSU/Fall2014/"
+
+# Load either your data or the example data (Substitute your name to get your data)
+example <- as.data.frame(read.dta(paste0(url, "JohnDoe-task3.dta")))
+
+# Create a new variable containing the difference between math scores
+example$mthdiff <- example$mthscore2 - example$mthscore1
+
+# Create a new variable containing the difference between reading scores
+example$rladiff <- example$rlascore2 - example$rlascore1
+```
+
+---   
+
+# What are correlations?
+## What do correlations quantify?
+* Correlations provide a way to summarize the strength of a relationship between two variables
+* A correlation of -1 means that for each 1 unit increase in the x variable there is a 1 unit decrease in the y variable
+* A correlation of 1 means that for each 1 unit increase in the x variable there is a 1 unit increase in the y variable
+* A correlation of 0 means that there is no relationship between the two variables
+
+---   
+
+## What types of variables can you use for correlations?
+* For simple correlations (what we will be talking about tonight), both the x and y variables should be measured on intervallic and/or ratio scales
+* There are other methods available to calculate correlations between variables measured on other measurement scales and we'll get into those next week
+* You also need to be aware of the different approaches to handling missing data in correlations:
+     + Pairwise deletion means each observation needs to have non-missing data for the x and y variable but if there are data missing from other variables it doesn't affect things
+     + Listwise deletion means that each observation needs to have non-missing data for the full list of variables that you are interested in computing a correlation for 
+* This means that unlike a t-test where you can only use two variables, correlations can be calculated with many variables simultaneously
+
+---   
+
+## Are correlations the same as causes?
+* Correlation __is not__ the same as causation, nor does it imply causation
+* Establishing a cause and effect relationship is fairly complex in the context of education because we are not able to use randomized controlled trials (RCTs) due to ethical and/or cost constraints
+* When discussing/interpretting correlations, you should be framing things in the context of the relationship between the variables
+* For example, if you had a correlation of -0.8 between the size of a cars engine and miles per gallon would you say that the size of the engine caused the miles per gallon to decrease?
+
+
+---   
+
+# Illustrating correlations
+## A review of EDA for two or more variables
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE, fig.height = 5}
+ggplot(na.omit(example), aes(x = rlascore1, y = mthdiff)) + geom_point(alpha = I(0.15)) + #
+stat_smooth(method = "lm", fill = "red") + xlab("Prior Reading Score") + # 
+ylab("Difference in Math Scores \nCurrent vs. Prior Year")
+```
+
+---   
+
+## A reminder to use the linear smoother
+* Remember that the default smoother used by the `ggplot2` package is the loess smoother
+* You need to specify that you want the _linear model_ or 'lm' method to get the linear smoother to be displayed on the graph
+* The linear smoother illustrates correlation.  
+     + If the line goes up (from left to right) on a 45 degree angle and all of the points are extremely close to the line, you have a strong positive correlation
+     + If the line goes down (from left to right) on a 45 degree angle and all of the points are extremely close to the line, you have a strong negative correlation
+
+---   
+
+# Assumptions of simple correlations
+* Since we're only talking about _Pearson's r_ tonight, there are relatively few assumptions
+* The first is that the data are measured on an intervallic and/or ratio scale (remember that the ratio measurement scale inherits all of the properties of the previous scales and then gains some that are unique)
+* The second is multivariate normality
+     + Similar to the graphs that you needed to create for the t-tests, multivariate normality means that the distribution of both variables in the correlation are normal
+     + If the data are not normal, you may be able to use algebraic transformations (e.g., take the natural logarithm of the values of the variable, square the values, take the cubed root, etc...) to get them to be a closer approximation to normal
+* The book mentions using a nominal variable with two categories (e.g., 0 and 1) as acceptable, but that is something that most methodologists/statisticians/psychometricians would likely disagree with
+
+---   
+
+* On p. 229 the book begins to introduce correlations for cases where one variable is dichotomous (values are only 0 and 1) and the other is continuous (e.g., measured on an intervallic or ratio scale)
+* Point-Biserial correlations are things that we will get into next week and in the context of education are critical to evaluating the quality of assessments
+* There are also other types of Biserial, Polyserial, Rank, and Poly/Tetrachoric correlations that I will cover briefly next week
+
+---   
+
+## Correlations with listwise deletion
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE}
+cor(cbind(example$rladiff, example$mthdiff, example$rlascore1, #
+     example$rlascore2, example$mthscore1, example$mthscore2), #
+    use = "complete.obs", method = "pearson")
+```
+
+--- 
+
+## Correlations using pairwise deletion
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE}
+cor(cbind(example$rladiff, example$mthdiff, example$rlascore1, #
+     example$rlascore2, example$mthscore1, example$mthscore2), #
+    use = "pairwise.complete.obs", method = "pearson")
+```
+
+---   
+
+## Correlations with p-values
+
+```{r, eval = TRUE, echo = TRUE, tidy = TRUE}
+rcorr(as.matrix(cbind(example$rladiff, example$mthdiff)), #
+    type = "pearson")
+```
+
+--- 
+     
+# Next Class
+* Point Biserial correlations
+     + Their use in test construction
+     + Using them with small sample sizes
+* Other advanced correlation methods
+* Use the task3 dataset for the task4 assignment
+* There may be a new data set for the final so be sure that you are comfortable finding out how to 
+label your graphs using information from the dataset (in previous weeks' slides) and are comfortable 
+substituting different variables into the examples

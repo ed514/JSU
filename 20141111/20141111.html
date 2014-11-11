@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inferential Statistics:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Inferential Statistics:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Inferential Statistics:</h1>
+    <h2>Correlation</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Announcements</li>
+<li>Review</li>
+<li>What are correlations?
+
+<ul>
+<li>What do correlations quantify?</li>
+<li>What types of variables can you use for correlations?</li>
+<li>Are correlations the same as causes?</li>
+</ul></li>
+<li>Illustrating correlations
+
+<ul>
+<li>A review of EDA for two or more variables</li>
+<li>A reminder to use the linear smoother</li>
+</ul></li>
+<li>Assumptions of simple correlations</li>
+<li>Next Class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The task 3 resubmission is due by <strong>this friday at midnight</strong>. </li>
+<li>I can&#39;t tell if blackboard will allow you to resubmit or not, but if you have difficulties resubmitting, email the file with your code to me using the email address in the syllabus</li>
+<li>If you do not email your work to me, I will assume that what is in blackboard is your submission</li>
+<li><strong>READ THE SYLLABUS</strong> - many of you are throwing away points by not following the directions listed in the syllabus</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Give an example of when you would use an independent vs a dependent samples t-test.</li>
+<li>When would it make sense to use a dependent samples t-test?</li>
+<li>Given an example of a hypothesis that you would test with a dependent samples t-test.</li>
+<li>List some of the assumptions of a t-test and how you would check the assumptions</li>
+<li>Do the dependent and independent samples t-tests have exactly the same assumptions?  Explain your answer.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Install these packages if you haven&#39;t done so already
+# install.packages(&quot;Hmisc&quot;, dep = TRUE); install.packages(&quot;psych&quot;, dep = TRUE)
+
+# Load the foreign data package and the ggplot2 package
+library(&quot;foreign&quot;); library(&quot;ggplot2&quot;); library(&quot;Hmisc&quot;); library(&quot;psych&quot;)
+
+# Store the URL where the data can be accessed
+url &lt;- &quot;http://www.paces-consulting.org/stata/JSU/Fall2014/&quot;
+
+# Load either your data or the example data (Substitute your name to get your data)
+example &lt;- as.data.frame(read.dta(paste0(url, &quot;JohnDoe-task3.dta&quot;)))
+
+# Create a new variable containing the difference between math scores
+example$mthdiff &lt;- example$mthscore2 - example$mthscore1
+
+# Create a new variable containing the difference between reading scores
+example$rladiff &lt;- example$rlascore2 - example$rlascore1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>What are correlations?</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>What do correlations quantify?</h2>
+
+<ul>
+<li>Correlations provide a way to summarize the strength of a relationship between two variables</li>
+<li>A correlation of -1 means that for each 1 unit increase in the x variable there is a 1 unit decrease in the y variable</li>
+<li>A correlation of 1 means that for each 1 unit increase in the x variable there is a 1 unit increase in the y variable</li>
+<li>A correlation of 0 means that there is no relationship between the two variables</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>What types of variables can you use for correlations?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>For simple correlations (what we will be talking about tonight), both the x and y variables should be measured on intervallic and/or ratio scales</li>
+<li>There are other methods available to calculate correlations between variables measured on other measurement scales and we&#39;ll get into those next week</li>
+<li>You also need to be aware of the different approaches to handling missing data in correlations:
+
+<ul>
+<li>Pairwise deletion means each observation needs to have non-missing data for the x and y variable but if there are data missing from other variables it doesn&#39;t affect things</li>
+<li>Listwise deletion means that each observation needs to have non-missing data for the full list of variables that you are interested in computing a correlation for </li>
+</ul></li>
+<li>This means that unlike a t-test where you can only use two variables, correlations can be calculated with many variables simultaneously</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Are correlations the same as causes?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Correlation <strong>is not</strong> the same as causation, nor does it imply causation</li>
+<li>Establishing a cause and effect relationship is fairly complex in the context of education because we are not able to use randomized controlled trials (RCTs) due to ethical and/or cost constraints</li>
+<li>When discussing/interpretting correlations, you should be framing things in the context of the relationship between the variables</li>
+<li>For example, if you had a correlation of -0.8 between the size of a cars engine and miles per gallon would you say that the size of the engine caused the miles per gallon to decrease?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Illustrating correlations</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A review of EDA for two or more variables</h2>
+
+<pre><code class="r">ggplot(na.omit(example), aes(x = rlascore1, y = mthdiff)) + geom_point(alpha = I(0.15)) + #
+stat_smooth(method = &quot;lm&quot;, fill = &quot;red&quot;) + xlab(&quot;Prior Reading Score&quot;) + # 
+ylab(&quot;Difference in Math Scores \nCurrent vs. Prior Year&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>A reminder to use the linear smoother</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Remember that the default smoother used by the <code>ggplot2</code> package is the loess smoother</li>
+<li>You need to specify that you want the <em>linear model</em> or &#39;lm&#39; method to get the linear smoother to be displayed on the graph</li>
+<li>The linear smoother illustrates correlation.<br>
+
+<ul>
+<li>If the line goes up (from left to right) on a 45 degree angle and all of the points are extremely close to the line, you have a strong positive correlation</li>
+<li>If the line goes down (from left to right) on a 45 degree angle and all of the points are extremely close to the line, you have a strong negative correlation</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Assumptions of simple correlations</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Since we&#39;re only talking about <em>Pearson&#39;s r</em> tonight, there are relatively few assumptions</li>
+<li>The first is that the data are measured on an intervallic and/or ratio scale (remember that the ratio measurement scale inherits all of the properties of the previous scales and then gains some that are unique)</li>
+<li>The second is multivariate normality
+
+<ul>
+<li>Similar to the graphs that you needed to create for the t-tests, multivariate normality means that the distribution of both variables in the correlation are normal</li>
+<li>If the data are not normal, you may be able to use algebraic transformations (e.g., take the natural logarithm of the values of the variable, square the values, take the cubed root, etc...) to get them to be a closer approximation to normal</li>
+</ul></li>
+<li>The book mentions using a nominal variable with two categories (e.g., 0 and 1) as acceptable, but that is something that most methodologists/statisticians/psychometricians would likely disagree with</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>On p. 229 the book begins to introduce correlations for cases where one variable is dichotomous (values are only 0 and 1) and the other is continuous (e.g., measured on an intervallic or ratio scale)</li>
+<li>Point-Biserial correlations are things that we will get into next week and in the context of education are critical to evaluating the quality of assessments</li>
+<li>There are also other types of Biserial, Polyserial, Rank, and Poly/Tetrachoric correlations that I will cover briefly next week</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Correlations with listwise deletion</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">cor(cbind(example$rladiff, example$mthdiff, example$rlascore1, #
+     example$rlascore2, example$mthscore1, example$mthscore2), #
+    use = &quot;complete.obs&quot;, method = &quot;pearson&quot;)
+</code></pre>
+
+<pre><code>##          [,1]     [,2]     [,3]     [,4]    [,5]    [,6]
+## [1,]  1.00000  0.01113 -0.43017  0.36884 -0.1318 -0.1276
+## [2,]  0.01113  1.00000 -0.09087 -0.08452 -0.1209  0.1708
+## [3,] -0.43017 -0.09087  1.00000  0.68043  0.7157  0.6839
+## [4,]  0.36884 -0.08452  0.68043  1.00000  0.6298  0.6006
+## [5,] -0.13184 -0.12093  0.71565  0.62983  1.0000  0.9574
+## [6,] -0.12763  0.17075  0.68393  0.60059  0.9574  1.0000
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Correlations using pairwise deletion</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">cor(cbind(example$rladiff, example$mthdiff, example$rlascore1, #
+     example$rlascore2, example$mthscore1, example$mthscore2), #
+    use = &quot;pairwise.complete.obs&quot;, method = &quot;pearson&quot;)
+</code></pre>
+
+<pre><code>##          [,1]     [,2]     [,3]     [,4]    [,5]    [,6]
+## [1,]  1.00000  0.01113 -0.42996  0.36956 -0.1321 -0.1277
+## [2,]  0.01113  1.00000 -0.09075 -0.08369 -0.1195  0.1720
+## [3,] -0.42996 -0.09075  1.00000  0.68004  0.7164  0.6844
+## [4,]  0.36956 -0.08369  0.68004  1.00000  0.6291  0.6000
+## [5,] -0.13215 -0.11946  0.71640  0.62908  1.0000  0.9575
+## [6,] -0.12767  0.17195  0.68437  0.59998  0.9575  1.0000
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Correlations with p-values</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">rcorr(as.matrix(cbind(example$rladiff, example$mthdiff)), #
+    type = &quot;pearson&quot;)
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,] 1.00 0.01
+## [2,] 0.01 1.00
+## 
+## n
+##        [,1]   [,2]
+## [1,] 133342 101798
+## [2,] 101798 133342
+## 
+## P
+##      [,1]  [,2] 
+## [1,]       4e-04
+## [2,] 4e-04
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h1>Next Class</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Point Biserial correlations
+
+<ul>
+<li>Their use in test construction</li>
+<li>Using them with small sample sizes</li>
+</ul></li>
+<li>Other advanced correlation methods</li>
+<li>Use the task3 dataset for the task4 assignment</li>
+<li>There may be a new data set for the final so be sure that you are comfortable finding out how to 
+label your graphs using information from the dataset (in previous weeks&#39; slides) and are comfortable 
+substituting different variables into the examples</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Announcements'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Review'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='What are correlations?'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='What types of variables can you use for correlations?'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Are correlations the same as causes?'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Illustrating correlations'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='A reminder to use the linear smoother'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Assumptions of simple correlations'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title=''>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Correlations with listwise deletion'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Correlations using pairwise deletion'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Correlations with p-values'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Next Class'>
+         15
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
