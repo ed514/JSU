@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inferential Statistics:</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Inferential Statistics:">
+  <meta name="author" content="William R. Buchanan, Ph.D.">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Inferential Statistics:</h1>
+    <h2>Advanced Correlational Techniques</h2>
+    <p>William R. Buchanan, Ph.D.<br/>Strategic Data Fellow at MDE/Adjunct Prof at JSU</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Announcements</li>
+<li>Review</li>
+<li>What are advanced correlational techniques?
+
+<ul>
+<li>Examples of different types of correlations</li>
+<li>Why are they so advanced</li>
+</ul></li>
+<li>Applying Biserial Correlations to the Classroom
+
+<ul>
+<li>How should your test data be stored? </li>
+<li>Setting up/Importing your data</li>
+<li>Generating Total Scores</li>
+<li>Getting the Point Biserial Correlations</li>
+<li>What is a bootstrap and why should you use it?</li>
+</ul></li>
+<li>Next Class</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The task 3 resubmission is due by <strong>this friday at midnight</strong>. </li>
+<li>I can&#39;t tell if blackboard will allow you to resubmit or not, but if you have difficulties resubmitting, email the file with your code to me using the email address in the syllabus</li>
+<li>If you do not email your work to me, I will assume that what is in blackboard is your submission</li>
+<li><strong>READ THE SYLLABUS</strong> - many of you are throwing away points by not following the directions listed in the syllabus</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Give an example of when you would use an independent vs a dependent samples t-test.</li>
+<li>When would it make sense to use a dependent samples t-test?</li>
+<li>Given an example of a hypothesis that you would test with a dependent samples t-test.</li>
+<li>List some of the assumptions of a t-test and how you would check the assumptions</li>
+<li>Do the dependent and independent samples t-tests have exactly the same assumptions?  Explain your answer.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Install these packages if you haven&#39;t done so already
+# install.packages(&quot;psych&quot;, dep = TRUE)
+# install.packages(&quot;ltm&quot;, dep = TRUE)
+
+# Load the ltm and boot packages in R
+library(&quot;ltm&quot;); library(&quot;boot&quot;); library(&quot;ggplot2&quot;); library(&quot;psych&quot;)
+
+# Set the random number seed to generate exactly the same data as I am using
+set.seed(7779311)
+
+# Simulate a small number of test items for an average size class
+test &lt;- sim.rasch(nvar = 20, n = 28, low = -4, high = 4, a = 1, 
+                     mu = -0.125, sd = 1)
+
+# Create a data frame of the item responses and add an ID column at the beginning
+testData &lt;- cbind(studentid = seq(1, 28, 1), as.data.frame(test$items))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>What are advanced correlational techniques?</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Examples of different types of correlations</h2>
+
+<ul>
+<li>Last class we discussed Pearson&#39;s <em>r</em> correlation coefficient which is used 
+when you want to estimate the relationship between two continuous variables.<br></li>
+<li>However, this method is not always appropriate or even the most accurate when 
+the two variables you are using are not measured on an intervallic or ratio 
+measurement scale</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>The following table shows the different types of correlations that are used 
+when one variable is measured on the measurement scale listed in the left-most 
+row and the other variable is measured on the measurement scale identified in 
+the column header</li>
+</ul>
+
+<pre><code>## 
+## ----------------- -------------- ------------- -----------------
+##                      Nominal        Ordinal    Intervallic/Ratio
+##      Nominal       Tetrachoric   Rank Biserial  Point Biserial  
+##      Ordinal      Rank Biserial   Polychoric      Polyserial    
+## Intervallic/Ratio Point Biserial  Polyserial      Pearson&#39;s r   
+## ----------------- -------------- ------------- -----------------
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Why are they so advanced</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A major difference in these correlation methods compared to Pearson&#39;s <em>r</em> is 
+that these make assumptions about the non-continuous variables
+
+<ul>
+<li>More specifically, they typically assume that there is some underlying 
+trait that is normally distributed that could be used to define thresholds</li>
+<li>Pearson&#39;s <em>r</em> does not make these same assumptions</li>
+</ul></li>
+<li>These are not as easy to accurately interpret, but much of what you worked on 
+last week could still be applied in a general sense</li>
+<li>The advanced methods that have regular practical use cases in education are 
+what we&#39;ll be talking about today</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>First, however, make sure that you&#39;ve run the example code from the earlier 
+slides as it will be important in a few moments</li>
+<li>Assuming you&#39;ve already run that code, the next thing to do would be to look 
+at your data:</li>
+</ul>
+
+<pre><code class="r">View(testData)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h1>Applying Biserial Correlations to the Classroom</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How should your test data be stored?</h2>
+
+<ul>
+<li>As you can see from the example from the previous slide, test data should be 
+stored with a single item per column and a single student per row</li>
+<li>Although the example above simulates data, you can easily store your data in a 
+text file and read it into R to use/store the data.</li>
+<li>If you want to do this with multiple assignments and store/access all of the 
+data in R, it would be helpful for you to look at <code>?rbind</code> to see how you can 
+add the data sets on top of one another</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Example of text dataset</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The example data below are also on GitHub (textexample.txt)</h2>
+
+<p>studentid, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10 </p>
+
+<p>1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0 </p>
+
+<p>2, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1 </p>
+
+<p>3, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1 </p>
+
+<p>4, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0 </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Setting up/Importing your data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Read the text file into the data object called textExample
+# There is a HEADER row with variable/column names
+# Columns are SEParated by COMMAS (&quot;,&quot;)
+# If there are string/text variables do not convert them to factor variables
+textExample &lt;- #
+    read.table(&quot;~/Desktop/Dropbox/JSU/Fall2014/20141118/textexample.txt&quot;, #
+    header = TRUE, sep = &quot;,&quot;, stringsAsFactors = FALSE)
+</code></pre>
+
+<ul>
+<li>You can confirm that all went well using <code>View(textExample)</code> to look at the data</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Generating Total Scores</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We have data that contain <strong>item responses</strong> that indicate if the child answered
+correctly (1) or incorrectly (0) available now</li>
+<li>What we don&#39;t have is a summative measure (e.g., a single score) that describes 
+the test performance overall
+
+<ul>
+<li>Although you may normally use the % correct in your grading, it would not 
+be as helpful in this instance</li>
+<li>Generating the total score can be fairly easy if you know the structure of 
+your data</li>
+</ul></li>
+<li>We&#39;ll add a new variable to the data to show how to create and store the total 
+in the same data object</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Create a column with the total score based on correct responses
+testData$total &lt;- rowSums(testData[, -1])
+# You can use boxplots to look at the relationship between items and scores
+ggplot(testData, aes(x = factor(V13), y = total)) + geom_boxplot()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>What do you notice about the box plot?<br>
+
+<ul>
+<li>From this plot, do you think there is a correlation between the total score
+and the response of a student on item 13?</li>
+<li>If you do think there is a correlation, is it positive or negative?  And 
+how strong is the correlation (e.g., does a good job of predicting the total)?</li>
+<li>If you don&#39;t think there is a correlation, why do you think that?</li>
+</ul></li>
+<li>Even with only 28 students and a 20 item test, there is a lot that you can 
+learn about the quality of your test items just from these descriptive statistics</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Getting the Point Biserial Correlations</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>So, you probably want to know whether the item was correlated.<br></li>
+<li>To do this, we&#39;ll use the <code>biserial()</code> function from the <code>library(psych)</code> package</li>
+</ul>
+
+<pre><code class="r"># The first variable in the function should be your total score The second
+# variable in the function MUST BE a DICHOTOMOUS (e.g., 0 or 1) variable
+biserial(testData$total, testData$V13)
+</code></pre>
+
+<pre><code>##        [,1]
+## [1,] 0.6517
+</code></pre>
+
+<ul>
+<li>But given our sample size we probably want something a bit more robust to make 
+any substantive decisions, to do that, I&#39;ll briefly show you an advanced technique 
+used in statistics called bootstrapping</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>What is a bootstrap and why should you use it?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Hopefully, you remember the different discussions that we&#39;ve had about how 
+larger sample sizes reduce variance (if not you may want to review your notes)</li>
+<li>Bootstrapping is a way to deal with parameters whose true distribution is not 
+yet well defined/understood and/or to provide some way to quantify the potential 
+bias in your parameter estimates
+
+<ul>
+<li>Since your classes don&#39;t have that many students, this can give you a bit 
+better of an understanding of how accurate your correlations are and give you
+a better indication of whether or not to consider using the item in the future</li>
+</ul></li>
+<li>Keep in mind, however, that this is an extremely cursory look into the world of 
+psychometrics and test development</li>
+<li>Most of the assessments you&#39;ll encounter from many vendors use much more 
+sophisticated modeling techniques, but it all starts with the biserial correlations</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Define a function that the boot strap will calculate repeatedly
+f &lt;- function(dF, i) {
+
+    # This line allows the boot strap procedure to sample randomly from your
+    # data
+    dataSample &lt;- dF[i, ]
+
+    # We want to return the value of the biserial correlation for the group with
+    # the correct responses (level = 1 would give you the group with incorrect
+    # responses); change dataSample$V13 to dataSample$V# to use this function
+    # for other test items
+    return(biserial.cor(dataSample$total, dataSample$V13, level = 2))
+
+}  # The function call needs to end with a curly bracket by itself
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Now that the function is defined lets use it to get the correlation with
+# 10 boot strapped samples
+item.10 &lt;- boot(testData, f, R = 10)
+
+# This time with 100 samples
+item.100 &lt;- boot(testData, f, R = 100)
+
+# This time with 1000 samples
+item.1000 &lt;- boot(testData, f, R = 1000)
+
+# This time with 10000 samples
+item.10000 &lt;- boot(testData, f, R = 10000)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Print the results from 10 Bootstrapped samples
+item.10
+</code></pre>
+
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = testData, statistic = f, R = 10)
+## 
+## 
+## Bootstrap Statistics :
+##     original   bias    std. error
+## t1*   0.5074 -0.02878        0.13
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Print the results from 100 Bootstrapped samples
+item.100
+</code></pre>
+
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = testData, statistic = f, R = 100)
+## 
+## 
+## Bootstrap Statistics :
+##     original  bias    std. error
+## t1*   0.5074 0.01213      0.1279
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Print the results from 1000 Bootstrapped samples
+item.1000
+</code></pre>
+
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = testData, statistic = f, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original    bias    std. error
+## t1*   0.5074 9.273e-05      0.1331
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"># Print the results from 10000 Bootstrapped samples
+item.10000
+</code></pre>
+
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = testData, statistic = f, R = 10000)
+## 
+## 
+## Bootstrap Statistics :
+##     original    bias    std. error
+## t1*   0.5074 -0.004165      0.1345
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Next Class</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Enjoy thanksgiving and the week off.</li>
+<li>Make sure to get Task 4 turned in on time</li>
+<li>For the final, you&#39;ll need to do a little bit of everything from the course, 
+so make sure you&#39;re reviewing things regularly</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Announcements'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Review'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='What are advanced correlational techniques?'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Why are they so advanced'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title=''>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Applying Biserial Correlations to the Classroom'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Example of text dataset'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Setting up/Importing your data'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Generating Total Scores'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title=''>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title=''>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Getting the Point Biserial Correlations'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='What is a bootstrap and why should you use it?'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title=''>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title=''>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title=''>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title=''>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title=''>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title=''>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Next Class'>
+         23
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
