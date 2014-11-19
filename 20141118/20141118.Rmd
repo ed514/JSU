@@ -30,20 +30,17 @@ knit        : slidify::knit2slides
 ---   
 
 ## Announcements
-* The task 3 resubmission is due by __this friday at midnight__. 
-* I can't tell if blackboard will allow you to resubmit or not, but if you have difficulties resubmitting, email the file with your code to me using the email address in the syllabus
-* If you do not email your work to me, I will assume that what is in blackboard is your submission
-* __READ THE SYLLABUS__ - many of you are throwing away points by not following the directions listed in the syllabus
+* Task 4 is due by Friday night 21nov2014
+* Many people missed the opportunity to resubmit task 3
+* You are expected to do the course readings and prepare for class
+
 
 ---
 
 ## Review
-* Give an example of when you would use an independent vs a dependent samples t-test.
-* When would it make sense to use a dependent samples t-test?
-* Given an example of a hypothesis that you would test with a dependent samples t-test.
-* List some of the assumptions of a t-test and how you would check the assumptions
-* Do the dependent and independent samples t-tests have exactly the same assumptions?  Explain your answer.
-
+* What are correlations used for?
+* What measurement scales should the variables be measured on for the correlations
+that were discussed last week?
 
 ---   
 
